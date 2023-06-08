@@ -12,7 +12,7 @@ const Create = () => {
           <button className="absolute top-0 right-0  bg-lime-600 rounded-lg p-1 text-white text-sm">publish</button>
         </div>
         <div className="border-none ml-36 w-[70vw] ">
-          <ReactQuill placeholder="create your blog.." className="border-none  h-60" />
+          <ReactQuill placeholder="Create your blog.." className="border-none  h-60" />
         </div>
       </form>
     </div>
