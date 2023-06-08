@@ -1,6 +1,6 @@
-import Blogs from '../../Components/Blogs';
-import Main from '../../Components/Main';
-import Sidebar from '../../Components/Sidebar';
+import Blogs from '../Components/Blogs';
+import Main from '../Components/Main';
+import Sidebar from '../Components/Sidebar';
 const Home = () => {
   return (
     <div>

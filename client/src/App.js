@@ -1,12 +1,16 @@
 // import logo from './images/logo.png';
+
 import './App.css';
 import Navbar from './Components/Navbar';
-import Home from './pages/home/Home';
+import Create from './pages/Create';
+import Home from './pages/Home';
+import SingleBlog from './pages/SingleBlog';
 function App() {
   return (
     <div>
       <Navbar />
-      <Home />
+
+      <Create />
     </div>
   );
 }

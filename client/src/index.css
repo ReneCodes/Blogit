@@ -14,7 +14,36 @@ code {
   flex-direction: column;
   align-items: center;
 }
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500;1,600;1,700&family=Open+Sans:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700&family=Space+Mono&display=swap');
+.listItems {
+  display: inline-block;
+  width: 50%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.blogTitle {
+  font-family: 'Raleway';
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.blogDate {
+  font-family: 'Lora';
+  font-style: italic;
+}
+.blogDesc {
+  font-family: 'Varela Round';
+  color: grey;
+  line-height: 24px;
+  font-size: 14px;
+  margin-top: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500;1,600;1,700&family=Open+Sans:wght@300;400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700&family=Space+Mono&family=Varela&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
