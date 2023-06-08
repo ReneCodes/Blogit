@@ -17,7 +17,7 @@ const Navbar = () => {
         </ul>
       </div>
       <div style={{ flex: 3 }} className="flex flex-col items-end mx-8">
-        <img src={gpic} className="w-10 h-10 rounded-full flex items-center justify-center" />
+        <img src={gpic} className="w-10 h-10 rounded-full flex items-center justify-center" alt="profilepic" />
       </div>
     </div>
   );
