@@ -13,10 +13,13 @@ const Register = () => {
         <label className="my-2.5 mx-0">Password</label>
         <input className="p-2.5 bg-white border-none rounded-lg focus:outline-none" type="password" placeholder="Create your password..." />
         <button className="mt-5 cursor-pointer bg-lime-600 text-white p-2.5 border-none rounded-lg text-center">Register</button>
+        <span>
+          Already have an account?
+          <Link className="text-sky-600" to="/login">
+            Login
+          </Link>
+        </span>
       </form>
-      <button className="absolute top-20 right-24 bg-red-400 text-white cursor-pointer p-2.5 border-none rounded-lg">
-        <Link to="/login">Login</Link>
-      </button>
     </div>
   );
 };
