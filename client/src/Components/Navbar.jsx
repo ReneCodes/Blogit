@@ -5,6 +5,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import gpic from '../images/gpic.jpg';
 import logo from '../images/logo.png';
 import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   const user = false;
   return (

@@ -12,6 +12,7 @@ import Navbar from './Components/Navbar';
 
 function App() {
   const user = true;
+
   return (
     <BrowserRouter>
       <Navbar />

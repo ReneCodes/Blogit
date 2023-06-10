@@ -18,8 +18,31 @@ const Create = () => {
           <input type="title" placeholder={'Title'} autoFocus={true} className="text-lg p-2 w-[70vw] mt-5" />
           <button className="absolute top-0 right-0 bg-lime-600  rounded-md w-20 text-white text-sm">publish</button>
         </div>
-        <div className="border-none ml-36 w-[70vw] ">
-          <ReactQuill placeholder="Create your blog.." className="border-none  h-60" />
+        <div className="border-none flex ml-36 w-[70vw]">
+          <ReactQuill placeholder="Create your blog.." className="border-none w-[68vw] h-60" />
+          <div className="p-1 flex flex-col text-xs w-[10vw] m-0">
+            <h1 className="text-center text-base">Category</h1>
+            <div className="flex items-center">
+              <input type="radio" name="cat" value="art" id="art" />
+              <label htmlFor="art">Art</label>
+            </div>
+            <div className="flex items-center">
+              <input type="radio" name="cat" value="science" id="science" />
+              <label htmlFor="science">Science</label>
+            </div>
+            <div className="flex items-center">
+              <input type="radio" name="cat" value="technology" id="technology" />
+              <label htmlFor="technology">Technology</label>
+            </div>
+            <div className="flex items-center">
+              <input type="radio" name="cat" value="music" id="music" />
+              <label htmlFor="music">Music</label>
+            </div>
+            <div className="flex items-center">
+              <input type="radio" name="cat" value="sports" id="sports" />
+              <label htmlFor="sports">Sports</label>
+            </div>
+          </div>
         </div>
       </form>
     </div>
