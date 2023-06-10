@@ -9,21 +9,22 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
+import { UserContextProvider } from './UserContext';
 
 function App() {
-  const user = false;
-
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" exact element={<Home />}></Route>
-        <Route path="/register" element={user ? <Home /> : <Register />}></Route>
-        <Route path="/login" element={user ? <Home /> : <Login />}></Route>
-        <Route path="/create" element={user ? <Create /> : <Register />}></Route>
-        <Route path="/blog/:blogId" element={<SingleBlog />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <UserContextProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" exact element={<Home />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/create" element={<Create />}></Route>
+          <Route path="/blog/:blogId" element={<SingleBlog />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
   );
 }
 

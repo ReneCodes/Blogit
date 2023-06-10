@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 3001;
@@ -7,6 +8,7 @@ const port = process.env.PORT || 3001;
 const router = require('./router');
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(router);
 
 app.listen(port, () => {

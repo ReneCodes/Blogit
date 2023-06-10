@@ -1,11 +1,14 @@
 import { Link, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Google from '../Components/Google';
+import { UserContext } from '../UserContext';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const { setUserInfo } = useContext(UserContext);
+
   async function handleLogin(e) {
     e.preventDefault();
     const response = await fetch('http://localhost:3001/login', {
@@ -15,7 +18,10 @@ const Login = () => {
       credentials: 'include',
     });
     if (response.ok) {
-      setRedirect(true);
+      response.json().then((userInfo) => {
+        setUserInfo(userInfo);
+        setRedirect(true);
+      });
     } else {
       alert('wrong credentials');
     }
@@ -23,6 +29,7 @@ const Login = () => {
   if (redirect) {
     return <Navigate to={'/'} />;
   }
+
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <span className="text-5xl">Login</span>

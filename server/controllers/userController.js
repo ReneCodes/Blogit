@@ -1,6 +1,7 @@
 const User = require('../models/User.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const SECRET = 'thissecret';
 
 async function UserGetRouter(req, res) {
   try {
@@ -10,6 +11,7 @@ async function UserGetRouter(req, res) {
     res.status(400).json({ e });
   }
 }
+
 async function UserPostRouter(req, res) {
   const { username, email, password } = req.body;
   const user = await User.findOne({ email: email });
@@ -28,20 +30,34 @@ async function UserPostRouter(req, res) {
     res.status(400).send({ error, message: 'Could not create user' });
   }
 }
+
 async function UserLoginRouter(req, res) {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username: username });
-    if (!user) {
-      res.status(404).json({ error: 'user not found' });
-    }
-    const validatedPass = await bcrypt.compare(password, user.password);
-    if (!validatedPass) throw new Error();
-    const token = jwt.sign({ _id: user._id }, 'thissecret');
-    // res.status(200).send({ token: token });
-    res.cookie('token', token).json('ok');
-  } catch (e) {
-    res.status(400).json({ e });
+  const { username, password } = req.body;
+  const userDoc = await User.findOne({ username });
+  const passOk = bcrypt.compareSync(password, userDoc.password);
+  if (passOk) {
+    // logged in
+    jwt.sign({ username, id: userDoc._id }, SECRET, {}, (err, token) => {
+      if (err) throw err;
+      res.cookie('token', token).json({
+        id: userDoc._id,
+        username,
+      });
+    });
+  } else {
+    res.status(400).json('wrong credentials');
   }
 }
-module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter };
+async function UserProfileRouter(req, res) {
+  const { token } = req.cookies;
+  jwt.verify(token, SECRET, {}, (err, info) => {
+    if (err) throw err;
+    res.json(info);
+  });
+}
+
+async function UserLogoutRouter(req, res) {
+  res.json('ok');
+}
+
+module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter };
