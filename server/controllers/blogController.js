@@ -43,5 +43,18 @@ async function BlogDeleteRouter(req, res) {
     response(res, 400, { error: error });
   }
 }
+async function BlogUpdateRouter(req, res) {
+  const { title, image, content, id } = req.body;
+  await Blog.findOneAndUpdate(
+    { user: req.userId, _id: id },
+    {
+      title,
+      content,
+      image,
+    }
+  )
+    .then((result) => response(res, 200, { msg: 'blog updated', blog: result }))
+    .catch((err) => response(res, 400, err));
+}
 
-module.exports = { BlogGetRouter, BlogPostRouter, BlogDeleteRouter };
+module.exports = { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter };

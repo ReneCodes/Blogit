@@ -38,7 +38,8 @@ async function UserLoginRouter(req, res) {
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
     const token = jwt.sign({ _id: user._id }, 'thissecret');
-    res.status(200).send({ token: token });
+    // res.status(200).send({ token: token });
+    res.cookie('token', token).json('ok');
   } catch (e) {
     res.status(400).json({ e });
   }

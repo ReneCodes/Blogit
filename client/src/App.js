@@ -11,7 +11,7 @@ import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
 
 function App() {
-  const user = true;
+  const user = false;
 
   return (
     <BrowserRouter>
