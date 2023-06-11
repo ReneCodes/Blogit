@@ -1,11 +1,17 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import gpic from '../images/gpic.jpg';
+import { useState } from 'react';
 const Create = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  function createBlog(e) {
+    e.preventDefault();
+  }
   return (
     <div className="p-12 pr-16">
       <img src={gpic} className="ml-36 h-64 w-[70vw] object-cover rounded-md mb-5" alt="profilepic" />
-      <form className="w-[70vw] ">
+      <form className="w-[70vw] " onSubmit={createBlog}>
         <div className="flex flex-col relative ml-36 w-[70vw] mb-5">
           <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">
             Upload Image
@@ -15,11 +21,27 @@ const Create = () => {
             id="file_input"
             type="file"
           />
-          <input type="title" placeholder={'Title'} autoFocus={true} className="text-lg p-2 w-[70vw] mt-5" />
+          <input
+            type="title"
+            placeholder={'Title'}
+            autoFocus={true}
+            className="text-lg p-2 w-[70vw] mt-5"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
           <button className="absolute top-0 right-0 bg-lime-600  rounded-md w-20 text-white text-sm">publish</button>
         </div>
         <div className="border-none flex ml-36 w-[70vw]">
-          <ReactQuill placeholder="Create your blog.." className="border-none w-[68vw] h-60" />
+          <ReactQuill
+            placeholder="Create your blog.."
+            className="border-none w-[68vw] h-60"
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+          />
           <div className="p-1 flex flex-col text-xs w-[10vw] m-0">
             <h1 className="text-center text-base">Category</h1>
             <div className="flex items-center">

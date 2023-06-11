@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 const Blog = (props) => {
-  const { username, title, id, content, image, timestamp } = props.blog;
+  const { username, title, id, content, image, createdAt } = props.blog;
   return (
     <div className="w-96 mt-0 mb-10 mx-6">
       <div>
@@ -17,7 +18,7 @@ const Blog = (props) => {
       </div>
       <div className="flex justify-between">
         <span className="blogDate">Author: {username} </span>
-        <span className="blogDate">{timestamp}</span>
+        <span className="blogDate">{moment(createdAt).format('MMMM Do YYYY')}</span>
       </div>
       <p className="blogDesc">{content}</p>
     </div>
