@@ -1,11 +1,11 @@
 const mongoose = require('./index');
-
-const BlogSchema = new mongoose.Schema(
+const { Schema } = mongoose;
+const BlogSchema = Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
     image: { type: String },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    author: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }
 );

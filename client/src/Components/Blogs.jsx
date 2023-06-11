@@ -12,7 +12,7 @@ const Blogs = () => {
   }, []);
   return (
     <div style={{ flex: 9 }}>
-      <div className="flex flex-wrap m-5">{blog && blog.map((blog) => <Blog key={blog.id} blog={blog} />)}</div>
+      <div className="flex flex-wrap m-5">{blog && blog.map((blog) => <Blog key={blog._id} blog={blog} />)}</div>
     </div>
   );
 };

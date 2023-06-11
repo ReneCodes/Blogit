@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 const Blog = (props) => {
-  const { username, title, id, content, image, createdAt } = props.blog;
+  const { title, _id, content, image, createdAt, author } = props.blog;
+  const capitalize = author?.username.toUpperCase();
   return (
     <div className="w-96 mt-0 mb-10 mx-6">
       <div>
@@ -13,12 +14,12 @@ const Blog = (props) => {
           <span className="mr-2.5 text-xs cursor-pointer">Technology</span>
         </div>
         <span className="blogTitle">
-          <Link to={`/blog/${id}`}>{title}</Link>
+          <Link to={`/blog/${_id}`}>{title}</Link>
         </span>
       </div>
       <div className="flex justify-between">
-        <span className="blogDate">Author: {username} </span>
-        <span className="blogDate">{moment(createdAt).format('MMMM Do YYYY')}</span>
+        <span className="blogDate">Author: {capitalize} </span>
+        <span className="blogDate">{moment(createdAt).fromNow()}</span>
       </div>
       <p className="blogDesc">{content}</p>
     </div>

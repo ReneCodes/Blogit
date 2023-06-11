@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const multer = require('multer');
 const { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter } = require('./controllers/userController.js');
-const { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter } = require('./controllers/blogController.js');
+const { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter, BlogGetByIdRouter } = require('./controllers/blogController.js');
 const getAuth = require('./middleware/auth');
 router.post('/register', UserPostRouter);
 router.get('/', UserGetRouter);
@@ -10,6 +10,7 @@ router.get('/profile', UserProfileRouter);
 router.post('/logout', UserLogoutRouter);
 
 router.get('/blog', BlogGetRouter);
+router.get('/blog/:id', BlogGetByIdRouter);
 router.post('/create', getAuth, BlogPostRouter);
 router.delete('/blog/delete', getAuth, BlogDeleteRouter);
 router.put('/blog/:id', getAuth, BlogUpdateRouter);

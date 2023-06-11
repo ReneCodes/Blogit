@@ -21,7 +21,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/create" element={<Create />}></Route>
-          <Route path="/blog/:blogId" element={<SingleBlog />}></Route>
+          <Route path="/blog/:id" element={<SingleBlog />}></Route>
         </Routes>
       </BrowserRouter>
     </UserContextProvider>
