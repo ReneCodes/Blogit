@@ -9,11 +9,11 @@ const Log = () => {
     fetch('http://localhost:3001/profile', {
       credentials: 'include',
     }).then((response) => {
-      response.json().then((userInfo) => {
-        setUserInfo(userInfo.username);
+      response.json().then((userInf) => {
+        setUserInfo(userInf.username);
       });
     });
-  }, []);
+  }, [setUserInfo]);
   const capitalize = (name) => {
     return name.toUpperCase();
   };
@@ -30,9 +30,9 @@ const Log = () => {
           <div>
             <p className="cursor-pointer font-light text-lg mr-4"> {`HI ${capitalize(username)}`}</p>
           </div>
-          <a href="" className="cursor-pointer font-light text-lg mr-4" onClick={Logout}>
+          <span className="cursor-pointer font-light text-lg mr-4" onClick={Logout}>
             LOGOUT
-          </a>
+          </span>
           <div>
             <img src={gpic} className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer" alt="profilepic" />
           </div>

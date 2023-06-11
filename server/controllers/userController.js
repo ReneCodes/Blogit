@@ -49,6 +49,7 @@ async function UserLoginRouter(req, res) {
   }
 }
 async function UserProfileRouter(req, res) {
+  if (!req.cookies) return;
   const { token } = req.cookies;
   jwt.verify(token, SECRET, {}, (err, info) => {
     if (err) throw err;
@@ -57,7 +58,7 @@ async function UserProfileRouter(req, res) {
 }
 
 async function UserLogoutRouter(req, res) {
-  res.json('ok');
+  res.cookie('token', '').json('ok');
 }
 
 module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter };
