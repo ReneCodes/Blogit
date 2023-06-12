@@ -10,7 +10,7 @@ import Register from './pages/Register';
 import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
 import { createContext, useState } from 'react';
-
+import Edit from './pages/Edit';
 export const AuthContext = createContext();
 function App() {
   const [reload, setReload] = useState(false);
@@ -25,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/create" element={<Create />}></Route>
           <Route path="/blog/:id" element={<SingleBlog />}></Route>
+          <Route path="/edit/:id" element={<Edit />}></Route>
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

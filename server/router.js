@@ -9,6 +9,7 @@ const {
   UserLogoutRouter,
   UserAuthRouter,
 } = require('./controllers/userController.js');
+
 const { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter, BlogGetByIdRouter } = require('./controllers/blogController.js');
 const getAuth = require('./middleware/auth');
 router.post('/register', UserPostRouter);
@@ -21,8 +22,8 @@ router.get('/auth', getAuth, UserAuthRouter);
 router.get('/blog', BlogGetRouter);
 router.get('/blog/:id', BlogGetByIdRouter);
 router.post('/create', getAuth, BlogPostRouter);
-router.delete('/delete', getAuth, BlogDeleteRouter);
-router.put('/blog/:id', getAuth, BlogUpdateRouter);
+router.delete('/blog/:id', getAuth, BlogDeleteRouter);
+router.put('/edit/:id', getAuth, BlogUpdateRouter);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

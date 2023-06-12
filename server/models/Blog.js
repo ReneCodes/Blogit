@@ -5,6 +5,7 @@ const BlogSchema = Schema(
     title: { type: String, required: true },
     content: { type: String, required: true },
     image: { type: String },
+    category: { type: String },
     author: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }

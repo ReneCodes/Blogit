@@ -1,11 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
+import { AuthContext } from '../App';
+
 const SoloBlog = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const { auth } = useContext(AuthContext);
   const path = location.pathname.split('/')[2];
   const [blog, setBlog] = useState({});
   const folder = 'http://localhost:3001/images/';
@@ -16,7 +20,16 @@ const SoloBlog = () => {
     };
     fetchBlog();
   }, [path]);
-  const capitalize = blog.author?.username.toUpperCase();
+  const capitalize = blog.author?.username;
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/blog/${blog._id}`, {
+        headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
+        data: {},
+      });
+      navigate('/');
+    } catch (err) {}
+  };
 
   return (
     <div className="m-10">
@@ -24,10 +37,14 @@ const SoloBlog = () => {
         <img src={folder + blog.image} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">
           {blog.title}
-          <div className="float-right text-base">
-            <FontAwesomeIcon icon={faUserPen} className="cursor-pointer  ml-3" />
-            <FontAwesomeIcon icon={faTrashCan} className="cursor-pointer ml-3" />
-          </div>
+          {auth?.username === blog.author?.username && (
+            <div className="float-right text-base">
+              <Link to={`/edit/${blog._id}`}>
+                <FontAwesomeIcon icon={faUserPen} className="cursor-pointer  ml-3" />
+              </Link>
+              <FontAwesomeIcon icon={faTrashCan} className="cursor-pointer ml-3" onClick={handleDelete} />
+            </div>
+          )}
         </h1>
         <div className="mt-5 mb-4 flex justify-between">
           <span>Authored by: {capitalize}</span>

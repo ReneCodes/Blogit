@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 const Blog = (props) => {
   const folder = 'http://localhost:3001/images/';
-  const { title, _id, content, image, createdAt, author } = props.blog;
-  const capitalize = author?.username.toUpperCase();
+  const { title, _id, content, image, createdAt, author, category } = props.blog;
+  const capitalize = author?.username;
   return (
     <div className="w-96 mt-0 mb-10 mx-6">
       <div>
@@ -11,10 +11,9 @@ const Blog = (props) => {
       </div>
       <div className="flex flex-col items-center">
         <div>
-          <span className="mr-2.5 text-xs cursor-pointer">Sports</span>
-          <span className="mr-2.5 text-xs cursor-pointer">Technology</span>
-          <span className="mr-2.5 text-xs cursor-pointer">Food</span>
-          <span className="mr-2.5 text-xs cursor-pointer">Travel</span>
+          <span className="mr-2.5 text-xs cursor-pointer">
+            <Link to={`/?cat=${category}`}>{category}</Link>
+          </span>
         </div>
         <span className="blogTitle">
           <Link to={`/blog/${_id}`}>{title}</Link>

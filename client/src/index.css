@@ -15,14 +15,16 @@ code {
 }
 .sidebarItem {
   display: flex;
+
   flex-direction: column;
   align-items: center;
 }
 .listItems {
   display: inline-block;
-  width: 50%;
-  margin-top: 10px;
+  width: 40%;
+  margin-top: 5px;
   cursor: pointer;
+  margin-left: 20px;
 }
 .blogTitle {
   font-family: 'Raleway';

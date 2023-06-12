@@ -1,20 +1,31 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-const Create = () => {
+import { useState, useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+const Edit = () => {
+  const { id } = useParams();
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('music');
 
   const [content, setContent] = useState('');
   const [file, setFile] = useState('');
   const [redirect, setRedirect] = useState(false);
+
   const onOptionChange = (e) => {
     setCategory(e.target.value);
   };
+  useEffect(() => {
+    fetch('http://localhost:3001/blog/' + id).then((response) => {
+      response.json().then((blogInfo) => {
+        setTitle(blogInfo.title);
+        setContent(blogInfo.content);
+        setCategory(blogInfo.category);
+      });
+    });
+  }, []);
 
-  async function createBlog(e) {
+  async function updateBlog(e) {
     e.preventDefault();
     const newBlog = {
       title,
@@ -32,8 +43,8 @@ const Create = () => {
       } catch (err) {}
     }
 
-    const response = await fetch('http://localhost:3001/create', {
-      method: 'POST',
+    const response = await fetch(`http://localhost:3001/edit/${id}`, {
+      method: 'PUT',
       body: JSON.stringify(newBlog),
       headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
       credentials: 'include',
@@ -44,13 +55,13 @@ const Create = () => {
   }
 
   if (redirect) {
-    return <Navigate to={'/'} />;
+    return <Navigate to={'/blog/' + id} />;
   }
 
   return (
     <div className="p-12 pr-16">
       {file && <img src={URL.createObjectURL(file)} className="ml-36 h-64 w-[70vw] object-cover rounded-md mb-5" alt="profilepic" />}
-      <form className="w-[70vw] " onSubmit={createBlog}>
+      <form className="w-[70vw] " onSubmit={updateBlog}>
         <div className="flex flex-col relative ml-36 w-[70vw] mb-5">
           <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">
             Upload Image
@@ -118,5 +129,4 @@ const Create = () => {
     </div>
   );
 };
-
-export default Create;
+export default Edit;

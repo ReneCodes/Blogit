@@ -7,6 +7,7 @@ const response = (res, status, result) => {
 };
 async function BlogGetRouter(req, res) {
   const username = req.query.user;
+  const catName = req.query.cat;
   try {
     let blogs;
     if (username) {
@@ -14,6 +15,8 @@ async function BlogGetRouter(req, res) {
         .then((user) => Blog.find({ author: user._id }).populate('author').sort({ createdAt: -1 }))
 
         .catch((err) => console.log(err));
+    } else if (catName) {
+      blogs = await Blog.find({ category: catName });
     } else {
       blogs = await Blog.find().populate('author', '-password').sort({ createdAt: -1 }).limit(20);
     }
@@ -24,11 +27,12 @@ async function BlogGetRouter(req, res) {
 }
 
 async function BlogPostRouter(req, res) {
-  const { title, content, image } = req.body;
+  const { title, content, image, category } = req.body;
 
   const postDoc = await Blog.create({
     title,
     content,
+    category,
     image,
     author: req.userId,
   });
@@ -36,7 +40,7 @@ async function BlogPostRouter(req, res) {
 }
 async function BlogDeleteRouter(req, res) {
   try {
-    const blog = await Blog.findOneAndDelete({ author: req.userId, _id: req.body.id });
+    const blog = await Blog.findOneAndDelete({ author: req.userId, _id: req.params.id });
     if (!blog) {
       response(res, 404, { error: 'no blog' });
     }
@@ -46,9 +50,9 @@ async function BlogDeleteRouter(req, res) {
   }
 }
 async function BlogUpdateRouter(req, res) {
-  const { title, image, content, id } = req.body;
+  const { title, image, content } = req.body;
   await Blog.findOneAndUpdate(
-    { author: req.userId, _id: id },
+    { author: req.userId, _id: req.params.id },
     {
       title,
       content,
