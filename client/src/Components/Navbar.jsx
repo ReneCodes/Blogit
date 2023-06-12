@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../images/logo.png';
+import avatar from '../images/avatar.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../App';
@@ -65,12 +66,12 @@ const Navbar = () => {
                   <p className="cursor-pointer font-light text-lg mr-4"> {`HI ${capitalize(auth.username)}`}</p>
                 </div>
 
-                <span className="cursor-pointer font-light text-lg mr-4" onClick={Logout}>
+                <span className="cursor-pointer font-light text-lg ml-10 mr-4" onClick={Logout}>
                   LOGOUT
                 </span>
 
                 <div>
-                  <img className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer" alt="profilepic" />
+                  <img src={avatar} className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer" alt="profilepic" />
                 </div>
               </>
             )}

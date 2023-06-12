@@ -13,6 +13,8 @@ const Blog = (props) => {
         <div>
           <span className="mr-2.5 text-xs cursor-pointer">Sports</span>
           <span className="mr-2.5 text-xs cursor-pointer">Technology</span>
+          <span className="mr-2.5 text-xs cursor-pointer">Food</span>
+          <span className="mr-2.5 text-xs cursor-pointer">Travel</span>
         </div>
         <span className="blogTitle">
           <Link to={`/blog/${_id}`}>{title}</Link>

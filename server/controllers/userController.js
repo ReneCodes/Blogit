@@ -35,14 +35,11 @@ async function UserLoginRouter(req, res) {
   try {
     const { username, password } = req.body;
     const userDoc = await User.findOne({ username });
-    if (!userDoc) {
-      res.status(404).json({ error: 'no user' });
-    }
+    !userDoc && res.status(400).json('Wrong credentials!');
 
     const passOk = bcrypt.compareSync(password, userDoc.password);
-    if (!passOk) {
-      res.status(400).json('wrong credentials');
-    }
+    !passOk && res.status(400).json('Wrong credentials!');
+
     const token = jwt.sign({ username, id: userDoc._id }, SECRET);
     res.status(201).json({ msg: 'logged in', token: token, username });
   } catch (error) {

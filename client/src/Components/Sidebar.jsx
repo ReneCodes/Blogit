@@ -8,6 +8,7 @@ const Sidebar = () => {
     const fetchBlog = async () => {
       const res = await axios.get('http://localhost:3001/blog');
       setBlog(res.data.slice(-2));
+      console.log(res.data);
     };
     fetchBlog();
   }, []);
