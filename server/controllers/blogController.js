@@ -7,15 +7,15 @@ const response = (res, status, result) => {
 };
 async function BlogGetRouter(req, res) {
   const username = req.query.user;
-  console.log(username);
   try {
     let blogs;
     if (username) {
       blogs = await User.findOne({ username: username })
-        .then((user) => Blog.find({ author: user._id }).populate('author'))
+        .then((user) => Blog.find({ author: user._id }).populate('author').sort({ createdAt: -1 }))
+
         .catch((err) => console.log(err));
     } else {
-      blogs = await Blog.find().populate('author', '-password');
+      blogs = await Blog.find().populate('author', '-password').sort({ createdAt: -1 }).limit(20);
     }
     res.status(200).json(blogs);
   } catch (error) {
@@ -24,26 +24,19 @@ async function BlogGetRouter(req, res) {
 }
 
 async function BlogPostRouter(req, res) {
-  try {
-    const { token } = req.cookies;
-    jwt.verify(token, SECRET, {}, async (err, info) => {
-      if (err) throw err;
-      const { title, content, image } = req.body;
-      const postDoc = await Blog.create({
-        title,
-        content,
-        image,
-        author: info.id,
-      });
-      res.json(postDoc);
-    });
-  } catch (error) {
-    response(res, 400, { error: error });
-  }
+  const { title, content, image } = req.body;
+
+  const postDoc = await Blog.create({
+    title,
+    content,
+    image,
+    author: req.userId,
+  });
+  res.json(postDoc);
 }
 async function BlogDeleteRouter(req, res) {
   try {
-    const blog = await Blog.findOneAndDelete({ user: req.userId, _id: req.body.id });
+    const blog = await Blog.findOneAndDelete({ author: req.userId, _id: req.body.id });
     if (!blog) {
       response(res, 404, { error: 'no blog' });
     }
@@ -55,7 +48,7 @@ async function BlogDeleteRouter(req, res) {
 async function BlogUpdateRouter(req, res) {
   const { title, image, content, id } = req.body;
   await Blog.findOneAndUpdate(
-    { user: req.userId, _id: id },
+    { author: req.userId, _id: id },
     {
       title,
       content,

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [redirect, setRedirect] = useState(false);
+
+  let navigate = useNavigate();
+
   async function handleSubmit(e) {
     e.preventDefault();
     const response = await fetch('http://localhost:3001/register', {
@@ -16,12 +18,9 @@ const Register = () => {
     if (response.status !== 201) {
       alert('registration failed');
     }
+    navigate('/login');
+  }
 
-    setRedirect(true);
-  }
-  if (redirect) {
-    return <Navigate to={'/login'} />;
-  }
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <span className="text-5xl">Register</span>

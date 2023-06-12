@@ -1,33 +1,32 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 
 import Google from '../Components/Google';
-import { UserContext } from '../UserContext';
+import { AuthContext } from '../App';
+
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [redirect, setRedirect] = useState(false);
-  const { setUserInfo } = useContext(UserContext);
+  const { setReload } = useContext(AuthContext);
 
   async function handleLogin(e) {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/login', {
+    const res = await fetch('http://localhost:3001/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
     });
-    if (response.ok) {
-      response.json().then((userInfo) => {
-        setUserInfo(userInfo);
-        setRedirect(true);
-      });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+
+      setReload(true);
+      navigate('/');
     } else {
       alert('wrong credentials');
     }
-  }
-  if (redirect) {
-    return <Navigate to={'/'} />;
   }
 
   return (

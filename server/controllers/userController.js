@@ -32,22 +32,24 @@ async function UserPostRouter(req, res) {
 }
 
 async function UserLoginRouter(req, res) {
-  const { username, password } = req.body;
-  const userDoc = await User.findOne({ username });
-  const passOk = bcrypt.compareSync(password, userDoc.password);
-  if (passOk) {
-    // logged in
-    jwt.sign({ username, id: userDoc._id }, SECRET, {}, (err, token) => {
-      if (err) throw err;
-      res.cookie('token', token).json({
-        id: userDoc._id,
-        username,
-      });
-    });
-  } else {
-    res.status(400).json('wrong credentials');
+  try {
+    const { username, password } = req.body;
+    const userDoc = await User.findOne({ username });
+    if (!userDoc) {
+      res.status(404).json({ error: 'no user' });
+    }
+
+    const passOk = bcrypt.compareSync(password, userDoc.password);
+    if (!passOk) {
+      res.status(400).json('wrong credentials');
+    }
+    const token = jwt.sign({ username, id: userDoc._id }, SECRET);
+    res.status(201).json({ msg: 'logged in', token: token, username });
+  } catch (error) {
+    res.status(400).json({ error: error });
   }
 }
+
 async function UserProfileRouter(req, res) {
   if (!req.cookies) return;
   const { token } = req.cookies;
@@ -60,5 +62,7 @@ async function UserProfileRouter(req, res) {
 async function UserLogoutRouter(req, res) {
   res.cookie('token', '').json('ok');
 }
-
-module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter };
+async function UserAuthRouter(req, res) {
+  res.status(200).json(req.auth);
+}
+module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter, UserAuthRouter };

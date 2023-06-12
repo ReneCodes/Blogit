@@ -1,4 +1,3 @@
-import gpic from '../images/gpic.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -9,6 +8,7 @@ const SoloBlog = () => {
   const location = useLocation();
   const path = location.pathname.split('/')[2];
   const [blog, setBlog] = useState({});
+  const folder = 'http://localhost:3001/images/';
   useEffect(() => {
     const fetchBlog = async () => {
       const res = await axios.get(`http://localhost:3001/blog/${path}`);
@@ -21,7 +21,7 @@ const SoloBlog = () => {
   return (
     <div className="m-10">
       <div>
-        <img src={gpic} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
+        <img src={folder + blog.image} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">
           {blog.title}
           <div className="float-right text-base">
@@ -33,7 +33,11 @@ const SoloBlog = () => {
           <span>Authored by: {capitalize}</span>
           <span>{moment(blog.createdAt).fromNow()}</span>
         </div>
-        <p className="first-letter:ml-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0">{blog.content}</p>
+
+        <div
+          className="first-letter:ml-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0"
+          dangerouslySetInnerHTML={{ __html: blog.content }}
+        />
       </div>
     </div>
   );

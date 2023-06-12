@@ -9,11 +9,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
-import { UserContextProvider } from './UserContext';
+import { createContext, useState } from 'react';
 
+export const AuthContext = createContext();
 function App() {
+  const [reload, setReload] = useState(false);
+  const [auth, setAuth] = useState(null);
   return (
-    <UserContextProvider>
+    <AuthContext.Provider value={{ auth, setAuth, reload, setReload }}>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -24,7 +27,7 @@ function App() {
           <Route path="/blog/:id" element={<SingleBlog />}></Route>
         </Routes>
       </BrowserRouter>
-    </UserContextProvider>
+    </AuthContext.Provider>
   );
 }
 
