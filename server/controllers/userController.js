@@ -2,7 +2,9 @@ const User = require('../models/User.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const SECRET = 'thissecret';
-
+const response = (res, status, result) => {
+  res.status(status).json(result);
+};
 async function UserGetRouter(req, res) {
   try {
     const user = await User.find();
@@ -48,18 +50,49 @@ async function UserLoginRouter(req, res) {
 }
 
 async function UserProfileRouter(req, res) {
-  if (!req.cookies) return;
-  const { token } = req.cookies;
-  jwt.verify(token, SECRET, {}, (err, info) => {
-    if (err) throw err;
-    res.json(info);
-  });
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
 
-async function UserLogoutRouter(req, res) {
-  res.cookie('token', '').json('ok');
+async function userProfileUpdateRouter(req, res) {
+  // const { username, image, password, email } = req.body;
+
+  if (req.body.password) {
+    const salt = await bcrypt.genSalt(10);
+    req.body.password = await bcrypt.hash(req.body.password, salt);
+  }
+  if (!req.body.password) {
+    req.body.password = req.auth.password;
+  }
+  if (!req.body.username) {
+    req.body.username = req.auth.username;
+  }
+  if (!req.body.email) {
+    req.body.email = req.auth.email;
+  }
+
+  await User.findByIdAndUpdate(
+    { author: req.userId, _id: req.params.id },
+    {
+      $set: req.body,
+    }
+  )
+    .then((result) => response(res, 200, { msg: 'user updated', user: result }))
+    .catch((err) => response(res, 400, err));
 }
+async function userDeleteRouter(req, res) {
+  // const { username, image, password, email } = req.body;
+
+  await User.findByIdAndDelete({ author: req.userId, _id: req.params.id })
+    .then((result) => response(res, 200, { msg: 'user deleted', user: result }))
+    .catch((err) => response(res, 400, err));
+}
+
 async function UserAuthRouter(req, res) {
   res.status(200).json(req.auth);
 }
-module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, UserLogoutRouter, UserAuthRouter };
+module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, userProfileUpdateRouter, UserAuthRouter, userDeleteRouter };

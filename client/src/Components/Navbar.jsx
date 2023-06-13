@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../App';
 const Navbar = () => {
+  const folder = 'http://localhost:3001/images/';
   const [info, setInfo] = useState('');
   let navigate = useNavigate();
   const { auth, setAuth, reload, setReload } = useContext(AuthContext);
@@ -71,7 +72,13 @@ const Navbar = () => {
                 </span>
 
                 <div>
-                  <img src={avatar} className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer" alt="profilepic" />
+                  <Link to="/profile">
+                    <img
+                      src={auth.image ? folder + auth.image : avatar}
+                      className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer"
+                      alt="profilepic"
+                    />
+                  </Link>
                 </div>
               </>
             )}

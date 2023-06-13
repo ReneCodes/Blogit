@@ -11,6 +11,7 @@ import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
 import { createContext, useState } from 'react';
 import Edit from './pages/Edit';
+import Profile from './pages/Profile';
 export const AuthContext = createContext();
 function App() {
   const [reload, setReload] = useState(false);
@@ -26,6 +27,7 @@ function App() {
           <Route path="/create" element={<Create />}></Route>
           <Route path="/blog/:id" element={<SingleBlog />}></Route>
           <Route path="/edit/:id" element={<Edit />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>

@@ -6,8 +6,9 @@ const {
   UserGetRouter,
   UserLoginRouter,
   UserProfileRouter,
-  UserLogoutRouter,
+  userProfileUpdateRouter,
   UserAuthRouter,
+  userDeleteRouter,
 } = require('./controllers/userController.js');
 
 const { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter, BlogGetByIdRouter } = require('./controllers/blogController.js');
@@ -15,9 +16,10 @@ const getAuth = require('./middleware/auth');
 router.post('/register', UserPostRouter);
 router.get('/users', UserGetRouter);
 router.post('/login', UserLoginRouter);
-router.get('/profile', UserProfileRouter);
-router.post('/logout', UserLogoutRouter);
+router.get('/profile/:id', UserProfileRouter);
+router.put('/profile/:id', getAuth, userProfileUpdateRouter);
 router.get('/auth', getAuth, UserAuthRouter);
+router.delete('/profile/:id', getAuth, userDeleteRouter);
 
 router.get('/blog', BlogGetRouter);
 router.get('/blog/:id', BlogGetByIdRouter);
@@ -36,6 +38,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 router.post('/upload', upload.single('file'), (req, res) => {
+  res.status(200).json('File has been uploaded');
+});
+router.post('/userimg', upload.single('file'), (req, res) => {
   res.status(200).json('File has been uploaded');
 });
 
