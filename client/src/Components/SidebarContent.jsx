@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SidebarContent = (props) => {
   const { title, _id, content, image } = props.blog;
-  const folder = process.env.REACT_APP_IMAGE_URL;
+  const folder = 'http://localhost:3001/images/';
   return (
     <>
       <div className="sidebarItem">

@@ -7,11 +7,11 @@ const Blogs = () => {
   const { search } = useLocation();
 
   useEffect(() => {
-    const updateBlog = async () => {
+    const fetchBlog = async () => {
       const res = await axios.get('http://localhost:3001/blog' + search);
       setBlog(res.data);
     };
-    updateBlog();
+    fetchBlog();
   }, [search]);
   return (
     <div style={{ flex: 9 }}>

@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 
+import Google from '../Components/Google';
 import { AuthContext } from '../App';
 
 const Login = () => {
@@ -56,6 +57,7 @@ const Login = () => {
           </Link>
         </span>
       </form>
+      <Google />
     </div>
   );
 };

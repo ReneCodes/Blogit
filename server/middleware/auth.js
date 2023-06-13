@@ -1,6 +1,6 @@
-const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const User = require('./../models/User');
+const SECRET = 'thissecret';
 
 const getAuth = async (req, res, next) => {
   try {
@@ -8,7 +8,7 @@ const getAuth = async (req, res, next) => {
     if (!token) {
       res.status(401).json({ error: 'unauthorised' });
     }
-    const verifiedToken = jwt.verify(token, process.env.SECRET);
+    const verifiedToken = jwt.verify(token, SECRET);
     const auth = await User.findById(verifiedToken.id);
     req.userId = verifiedToken.id;
 
