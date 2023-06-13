@@ -2,30 +2,30 @@ const router = require('express').Router();
 const multer = require('multer');
 
 const {
-  UserPostRouter,
-  UserGetRouter,
-  UserLoginRouter,
-  UserProfileRouter,
+  userPostRouter,
+  userGetRouter,
+  userLoginRouter,
+  userProfileRouter,
   userProfileUpdateRouter,
-  UserAuthRouter,
+  userAuthRouter,
   userDeleteRouter,
 } = require('./controllers/userController.js');
 
-const { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter, BlogGetByIdRouter } = require('./controllers/blogController.js');
+const { blogGetRouter, blogPostRouter, blogDeleteRouter, blogUpdateRouter, blogGetByIdRouter } = require('./controllers/blogController.js');
 const getAuth = require('./middleware/auth');
-router.post('/register', UserPostRouter);
-router.get('/users', UserGetRouter);
-router.post('/login', UserLoginRouter);
-router.get('/profile/:id', UserProfileRouter);
+router.post('/register', userPostRouter);
+router.get('/users', userGetRouter);
+router.post('/login', userLoginRouter);
+router.get('/profile/:id', userProfileRouter);
 router.put('/profile/:id', getAuth, userProfileUpdateRouter);
-router.get('/auth', getAuth, UserAuthRouter);
+router.get('/auth', getAuth, userAuthRouter);
 router.delete('/profile/:id', getAuth, userDeleteRouter);
 
-router.get('/blog', BlogGetRouter);
-router.get('/blog/:id', BlogGetByIdRouter);
-router.post('/create', getAuth, BlogPostRouter);
-router.delete('/blog/:id', getAuth, BlogDeleteRouter);
-router.put('/edit/:id', getAuth, BlogUpdateRouter);
+router.get('/blog', blogGetRouter);
+router.get('/blog/:id', blogGetByIdRouter);
+router.post('/create', getAuth, blogPostRouter);
+router.delete('/blog/:id', getAuth, blogDeleteRouter);
+router.put('/edit/:id', getAuth, blogUpdateRouter);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -38,9 +38,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 router.post('/upload', upload.single('file'), (req, res) => {
-  res.status(200).json('File has been uploaded');
-});
-router.post('/userimg', upload.single('file'), (req, res) => {
   res.status(200).json('File has been uploaded');
 });
 

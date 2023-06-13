@@ -36,7 +36,7 @@ const Register = () => {
         <label className="my-2.5 mx-0">Email</label>
         <input
           className="p-2.5 bg-white border-none rounded-lg focus:outline-none"
-          type="text"
+          type="email"
           placeholder="Create your email..."
           value={email}
           onChange={(e) => setEmail(e.target.value)}

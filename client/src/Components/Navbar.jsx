@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +9,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../App';
 const Navbar = () => {
-  const folder = 'http://localhost:3001/images/';
-  const [info, setInfo] = useState('');
+  const folder = process.env.REACT_APP_IMAGE_URL;
+
   let navigate = useNavigate();
   const { auth, setAuth, reload, setReload } = useContext(AuthContext);
   useEffect(() => {
@@ -42,7 +42,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full h-12  bg-white sticky top-0 flex items-center font-lora">
+    <nav className="w-full h-12  bg-white sticky top-0 flex items-center font-lora">
       <div style={{ flex: 2 }} className="flex items-center justify-center">
         <img src={logo} className="w-30 h-10" alt="logo" />
       </div>
@@ -99,7 +99,7 @@ const Navbar = () => {
         <FontAwesomeIcon className="ml-2 cursor-pointer w-5 h-7" icon={faMagnifyingGlass} />
         <input type="text" placeholder="Search here" className="h-full rounded-md mr-5 ml-2 w-24" />
       </div>
-    </div>
+    </nav>
   );
 };
 

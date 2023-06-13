@@ -1,20 +1,21 @@
+const dotenv = require('dotenv').config();
 const User = require('../models/User.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const SECRET = 'thissecret';
+
 const response = (res, status, result) => {
   res.status(status).json(result);
 };
-async function UserGetRouter(req, res) {
+async function userGetRouter(req, res) {
   try {
     const user = await User.find();
     res.status(200).json(user);
-  } catch (e) {
-    res.status(400).json({ e });
+  } catch (error) {
+    res.status(400).json({ error: error });
   }
 }
 
-async function UserPostRouter(req, res) {
+async function userPostRouter(req, res) {
   const { username, email, password } = req.body;
   const user = await User.findOne({ email: email });
   if (user) return res.status(409).send({ error: '409', message: 'User already exists' });
@@ -33,28 +34,32 @@ async function UserPostRouter(req, res) {
   }
 }
 
-async function UserLoginRouter(req, res) {
+async function userLoginRouter(req, res) {
   try {
     const { username, password } = req.body;
     const userDoc = await User.findOne({ username });
-    !userDoc && res.status(400).json('Wrong credentials!');
+    if (!userDoc) {
+      return res.status(400).json('Wrong credentials!');
+    }
 
-    const passOk = bcrypt.compareSync(password, userDoc.password);
-    !passOk && res.status(400).json('Wrong credentials!');
+    const passOk = await bcrypt.compare(password, userDoc.password);
+    if (!passOk) {
+      return res.status(400).json('Wrong credentials!');
+    }
 
-    const token = jwt.sign({ username, id: userDoc._id }, SECRET);
+    const token = jwt.sign({ username, id: userDoc._id }, process.env.SECRET);
     res.status(201).json({ msg: 'logged in', token: token, username });
   } catch (error) {
     res.status(400).json({ error: error });
   }
 }
 
-async function UserProfileRouter(req, res) {
+async function userProfileRouter(req, res) {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 }
 
@@ -82,17 +87,17 @@ async function userProfileUpdateRouter(req, res) {
     }
   )
     .then((result) => response(res, 200, { msg: 'user updated', user: result }))
-    .catch((err) => response(res, 400, err));
+    .catch((error) => response(res, 400, error));
 }
 async function userDeleteRouter(req, res) {
   // const { username, image, password, email } = req.body;
 
   await User.findByIdAndDelete({ author: req.userId, _id: req.params.id })
     .then((result) => response(res, 200, { msg: 'user deleted', user: result }))
-    .catch((err) => response(res, 400, err));
+    .catch((error) => response(res, 400, error));
 }
 
-async function UserAuthRouter(req, res) {
+async function userAuthRouter(req, res) {
   res.status(200).json(req.auth);
 }
-module.exports = { UserPostRouter, UserGetRouter, UserLoginRouter, UserProfileRouter, userProfileUpdateRouter, UserAuthRouter, userDeleteRouter };
+module.exports = { userPostRouter, userGetRouter, userLoginRouter, userProfileRouter, userProfileUpdateRouter, userAuthRouter, userDeleteRouter };

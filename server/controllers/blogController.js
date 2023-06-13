@@ -1,11 +1,12 @@
+const dotenv = require('dotenv').config();
 const Blog = require('../models/Blog.js');
 const User = require('../models/User.js');
 const jwt = require('jsonwebtoken');
-const SECRET = 'thissecret';
+
 const response = (res, status, result) => {
   res.status(status).json(result);
 };
-async function BlogGetRouter(req, res) {
+async function blogGetRouter(req, res) {
   const username = req.query.user;
   const catName = req.query.cat;
   try {
@@ -26,7 +27,7 @@ async function BlogGetRouter(req, res) {
   }
 }
 
-async function BlogPostRouter(req, res) {
+async function blogPostRouter(req, res) {
   const { title, content, image, category } = req.body;
 
   const postDoc = await Blog.create({
@@ -38,7 +39,7 @@ async function BlogPostRouter(req, res) {
   });
   res.json(postDoc);
 }
-async function BlogDeleteRouter(req, res) {
+async function blogDeleteRouter(req, res) {
   try {
     const blog = await Blog.findOneAndDelete({ author: req.userId, _id: req.params.id });
     if (!blog) {
@@ -49,7 +50,7 @@ async function BlogDeleteRouter(req, res) {
     response(res, 400, { error: error });
   }
 }
-async function BlogUpdateRouter(req, res) {
+async function blogUpdateRouter(req, res) {
   const { title, image, content } = req.body;
   await Blog.findOneAndUpdate(
     { author: req.userId, _id: req.params.id },
@@ -60,14 +61,14 @@ async function BlogUpdateRouter(req, res) {
     }
   )
     .then((result) => response(res, 200, { msg: 'blog updated', blog: result }))
-    .catch((err) => response(res, 400, err));
+    .catch((error) => response(res, 400, error));
 }
-async function BlogGetByIdRouter(req, res) {
+async function blogGetByIdRouter(req, res) {
   try {
     const post = await Blog.findById(req.params.id).populate('author', '-password');
     res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (error) {
+    res.status(500).json(error);
   }
 }
-module.exports = { BlogGetRouter, BlogPostRouter, BlogDeleteRouter, BlogUpdateRouter, BlogGetByIdRouter };
+module.exports = { blogGetRouter, blogPostRouter, blogDeleteRouter, blogUpdateRouter, blogGetByIdRouter };

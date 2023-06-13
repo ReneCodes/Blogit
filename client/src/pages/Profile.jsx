@@ -6,7 +6,7 @@ import axios from 'axios';
 import avatar from '../images/avatar.jpeg';
 import { AuthContext } from '../App';
 const Profile = () => {
-  const folder = 'http://localhost:3001/images/';
+  const folder = process.env.REACT_APP_IMAGE_URL;
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
