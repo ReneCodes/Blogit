@@ -8,7 +8,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       const res = await axios.get('http://localhost:3001/blog');
-      setBlog(res.data.slice(-2));
+      setBlog(res.data.slice(6, -2));
     };
     fetchBlog();
   }, []);

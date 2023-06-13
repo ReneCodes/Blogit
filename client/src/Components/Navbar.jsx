@@ -12,7 +12,9 @@ const Navbar = () => {
   const folder = process.env.REACT_APP_IMAGE_URL;
 
   let navigate = useNavigate();
+
   const { auth, setAuth, reload, setReload } = useContext(AuthContext);
+
   useEffect(() => {
     const fetchAuthUser = async () => {
       const res = await fetch('http://localhost:3001/auth', {
@@ -64,7 +66,9 @@ const Navbar = () => {
             {auth && (
               <>
                 <div>
-                  <p className="cursor-pointer font-light text-lg mr-4"> {`HI ${capitalize(auth.username)}`}</p>
+                  <p className="cursor-pointer font-light text-lg mr-4">
+                    <Link to="/userpage">{`HI ${capitalize(auth.username)}`}</Link>
+                  </p>
                 </div>
 
                 <span className="cursor-pointer font-light text-lg ml-10 mr-4" onClick={Logout}>

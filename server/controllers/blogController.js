@@ -17,7 +17,7 @@ async function blogGetRouter(req, res) {
 
         .catch((err) => console.log(err));
     } else if (catName) {
-      blogs = await Blog.find({ category: catName });
+      blogs = await Blog.find({ category: catName }).populate('author', '-password').sort({ createdAt: -1 }).limit(20);
     } else {
       blogs = await Blog.find().populate('author', '-password').sort({ createdAt: -1 }).limit(20);
     }

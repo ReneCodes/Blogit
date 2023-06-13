@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-const Blog = (props) => {
+const Usersolo = (props) => {
   const folder = process.env.REACT_APP_IMAGE_URL;
   const { title, _id, content, image, createdAt, author, category } = props.blog;
   const capitalize = (name) => {
@@ -40,4 +40,4 @@ const Blog = (props) => {
   );
 };
 
-export default Blog;
+export default Usersolo;

@@ -20,7 +20,9 @@ const SoloBlog = () => {
     };
     fetchBlog();
   }, [path]);
-  const capitalize = blog.author?.username;
+  const capitalize = (name) => {
+    return name?.toUpperCase();
+  };
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:3001/blog/${blog._id}`, {
@@ -47,7 +49,7 @@ const SoloBlog = () => {
           )}
         </h1>
         <div className="mt-5 mb-4 flex justify-between">
-          <span>Authored by: {capitalize}</span>
+          <span>Authored by:{capitalize(blog.author?.username)}</span>
           <span>{moment(blog.createdAt).fromNow()}</span>
         </div>
 
