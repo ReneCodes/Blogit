@@ -18,6 +18,10 @@ function App() {
   const [reload, setReload] = useState(false);
   const [auth, setAuth] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // The ones that have {auth && } will only load if the auth is authenticated
+  // The * will redirect the user to the login page
+
   return (
     <AuthContext.Provider value={{ auth, setAuth, reload, setReload, searchTerm, setSearchTerm }}>
       <BrowserRouter>
@@ -26,11 +30,12 @@ function App() {
           <Route path="/" exact element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/create" element={<Create />}></Route>
+          {auth && <Route path="/create" element={<Create />}></Route>}
           <Route path="/blog/:id" element={<SingleBlog />}></Route>
           <Route path="/edit/:id" element={<Edit />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/userpage" element={<UserPage />}></Route>
+          {auth && <Route path="/profile" element={<Profile />}></Route>}
+          {auth && <Route path="/userpage" element={<UserPage />}></Route>}
+          <Route path='*' element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
