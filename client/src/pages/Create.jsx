@@ -1,8 +1,8 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import axios from 'axios';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { createBlog } from '../utils/BlogUtils';
 
 function Create () {
 
@@ -16,33 +16,10 @@ function Create () {
     setCategory(e.target.value);
   };
 
-  async function createBlog(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newBlog = {
-      title,
-      content,
-      category,
-    };
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append('name', filename);
-      data.append('file', file);
-      newBlog.image = filename;
-      try {
-        await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
-      } catch (err) {}
-    }
-
-    const response = await fetch(`${process.env.REACT_APP_SERVER}/create`, {
-      method: 'POST',
-      body: JSON.stringify(newBlog),
-      headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
-      credentials: 'include',
-    });
-    if (response.ok) {
-      setRedirect(true);
-    }
+    const newBlog = { title, content, category };
+    createBlog(newBlog, file, setRedirect)
   }
 
   if (redirect) {
@@ -52,7 +29,7 @@ function Create () {
   return (
     <div className="p-12 pr-16">
       {file && <img src={URL.createObjectURL(file)} className="ml-36 h-64 w-[70vw] object-cover rounded-md mb-5" alt="profilepic" />}
-      <form className="w-[70vw] " onSubmit={createBlog}>
+      <form className="w-[70vw] " onSubmit={handleSubmit}>
         <div className="flex flex-col relative ml-36 w-[70vw] mb-5">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
             Upload Image

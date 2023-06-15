@@ -13,7 +13,7 @@ function Register() {
 
   let navigate = useNavigate();
 
-  // CHECKS IF THE USER IS ALREADY AUTHENTICATED WHEN OPENING THE /LOGIN PAGE
+  // CHECKS IF THE USER IS ALREADY AUTHENTICATED WHEN OPENING THE /REGISTER PAGE
   useEffect(() => {
     fetchAuthUser(setAuth, setReload, navigate);
   }, [])

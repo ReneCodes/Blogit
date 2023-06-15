@@ -3,15 +3,12 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SidebarContent from './SidebarContent';
+import {getBlog} from "../utils/BlogUtils"
 const Sidebar = () => {
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
-    const fetchBlog = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog`);
-      setBlog(res.data.slice(6, -2));
-    };
-    fetchBlog();
+    getBlog(setBlog);
   }, []);
 
   return (

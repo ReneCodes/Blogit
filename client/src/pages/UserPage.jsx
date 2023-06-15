@@ -1,20 +1,17 @@
-import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 
 import Usersolo from '../Components/Usersolo';
 import { AuthContext } from '../App';
+import { getUserBlogs } from "../utils/BlogUtils.js";
 
 function UserPage() {
   const { auth } = useContext(AuthContext);
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
-    const updateBlog = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`);
-      setBlog(res.data);
-    };
-    updateBlog();
+    getUserBlogs(auth, setBlog);
   }, []);
+
   return (
     <>
       <span className="flex flex-col font-open items-center text-3xl font-semibold italic color text-gray-800">My Blogs</span>

@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../App';
 import { logout, fetchAuthUser } from '../utils/AuthUtils';
+
 function Navbar() {
 
   let navigate = useNavigate();
@@ -17,9 +18,7 @@ function Navbar() {
 
   useEffect(() => {
     fetchAuthUser(setAuth, setReload)
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => { console.log(err); });
   }, [auth, reload]);
 
   function handleLogout() {
@@ -63,7 +62,7 @@ function Navbar() {
                 <div>
                   <Link to="/profile">
                     <img
-                      src={auth.image ? folder + auth.image : avatar}
+                      src={auth.image ? folder + '/' + auth.image : avatar}
                       className="ml-20 w-8 h-8 rounded-full items-center cursor-pointer"
                       alt="profilepic"
                     />
