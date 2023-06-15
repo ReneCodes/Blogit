@@ -1,5 +1,6 @@
 export const fetchAuthUser = async (setAuth, setReload, navigate) => {
-  const res = await fetch('http://localhost:3001/auth', {
+
+  const res = await fetch(`${process.env.REACT_APP_SERVER}/auth`, {
     method: 'GET',
     headers: {
       token: localStorage.getItem('token'),
@@ -26,7 +27,7 @@ export const logout = async (setReload, navigate) => {
 
 export const loginUser = async (credentials, setReload, navigate) => {
 
-  const res = await fetch('http://localhost:3001/login', {
+  const res = await fetch(`${process.env.REACT_APP_SERVER}/login`, {
     method: 'POST',
     body: JSON.stringify(credentials),
     headers: { 'Content-Type': 'application/json' },
@@ -42,8 +43,8 @@ export const loginUser = async (credentials, setReload, navigate) => {
   }
 };
 
-export const registerUser = async (credentials, navigate) => {
-  const res = await fetch('http://localhost:3001/register', {
+export const registerUser = async (credentials, setReload, navigate) => {
+  const res = await fetch(`${process.env.REACT_APP_SERVER}/register`, {
     method: 'POST',
     body: JSON.stringify(credentials),
     headers: { 'Content-Type': 'application/json' },
@@ -53,5 +54,6 @@ export const registerUser = async (credentials, navigate) => {
     alert('registration failed');
   } else {
     navigate('/login');
+    loginUser(credentials, setReload, navigate)
   }
 }

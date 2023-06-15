@@ -6,26 +6,30 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../App';
 
-const SoloBlog = () => {
+function SoloBlog () {
+
   const navigate = useNavigate();
   const location = useLocation();
   const { auth } = useContext(AuthContext);
   const path = location.pathname.split('/')[2];
   const [blog, setBlog] = useState({});
-  const folder = 'http://localhost:3001/images/';
+  const folder = `${process.env.REACT_APP_IMAGE_URL}/images/`;
+
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await axios.get(`http://localhost:3001/blog/${path}`);
+      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`);
       setBlog(res.data);
     };
     fetchBlog();
   }, [path]);
+
   const capitalize = (name) => {
     return name?.toUpperCase();
   };
+
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/blog/${blog._id}`, {
+      await axios.delete(`${process.env.REACT_APP_SERVER}/blog/${blog._id}`, {
         headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
         data: {},
       });
@@ -36,7 +40,7 @@ const SoloBlog = () => {
   return (
     <div className="m-10">
       <div>
-        <img src={folder + blog.image} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
+        <img src={folder + (blog.image ? blog.image : '')} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">
           {blog.title}
           {auth?.username === blog.author?.username && (

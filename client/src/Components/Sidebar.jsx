@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import SidebarContent from './SidebarContent';
 const Sidebar = () => {
   const [blog, setBlog] = useState([]);
+
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await axios.get('http://localhost:3001/blog');
+      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog`);
       setBlog(res.data.slice(6, -2));
     };
     fetchBlog();
   }, []);
+
   return (
     <div style={{ flex: 3 }} className="m-5 pb-8 bg-gray-100 flex rounded-lg flex-col items-center h-full">
       <div className="sidebarItem">

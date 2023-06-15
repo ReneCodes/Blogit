@@ -16,7 +16,7 @@ const Edit = () => {
     setCategory(e.target.value);
   };
   useEffect(() => {
-    fetch('http://localhost:3001/blog/' + id).then((response) => {
+    fetch(`${process.env.REACT_APP_SERVER}/blog/${id}`).then((response) => {
       response.json().then((blogInfo) => {
         setTitle(blogInfo.title);
         setContent(blogInfo.content);
@@ -39,11 +39,11 @@ const Edit = () => {
       data.append('file', file);
       newBlog.image = filename;
       try {
-        await axios.post('http://localhost:3001/upload', data);
+        await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
       } catch (err) {}
     }
 
-    const response = await fetch(`http://localhost:3001/edit/${id}`, {
+    const response = await fetch(`${process.env.REACT_APP_SERVER}/edit/${id}`, {
       method: 'PUT',
       body: JSON.stringify(newBlog),
       headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },

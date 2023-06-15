@@ -20,7 +20,7 @@ function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    registerUser({ username, password, email }, navigate);
+    registerUser({ username, password, email }, setReload, navigate);
   }
 
   return (

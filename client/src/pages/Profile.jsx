@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import avatar from '../images/avatar.jpeg';
 import { AuthContext } from '../App';
-const Profile = () => {
+
+function Profile() {
   const folder = process.env.REACT_APP_IMAGE_URL;
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState('');
@@ -28,10 +29,10 @@ const Profile = () => {
       data.append('file', file);
       updateUser.image = filename;
       try {
-        await axios.post('http://localhost:3001/upload', data);
+        await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
       } catch (err) {}
     }
-    const response = await fetch(`http://localhost:3001/profile/${auth._id}`, {
+    const response = await fetch(`${process.env.REACT_APP_SERVER}/profile/${auth._id}`, {
       method: 'PUT',
       body: JSON.stringify(updateUser),
       headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
@@ -40,16 +41,18 @@ const Profile = () => {
     if (response.ok) {
       navigate('/');
     }
-  }
+  };
+
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/profile/${auth._id}`, {
+      await axios.delete(`${process.env.REACT_APP_SERVER}/profile/${auth._id}`, {
         headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
         data: {},
       });
       navigate('/');
     } catch (err) {}
   };
+
   return (
     <div className="mt-16 relative flex justify-center align-middle">
       <div className="relative w-6/12 p-5">

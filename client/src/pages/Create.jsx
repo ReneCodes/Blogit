@@ -3,13 +3,15 @@ import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-const Create = () => {
+
+function Create () {
+
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('music');
-
   const [content, setContent] = useState('');
   const [file, setFile] = useState('');
   const [redirect, setRedirect] = useState(false);
+
   const onOptionChange = (e) => {
     setCategory(e.target.value);
   };
@@ -28,11 +30,11 @@ const Create = () => {
       data.append('file', file);
       newBlog.image = filename;
       try {
-        await axios.post('http://localhost:3001/upload', data);
+        await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
       } catch (err) {}
     }
 
-    const response = await fetch('http://localhost:3001/create', {
+    const response = await fetch(`${process.env.REACT_APP_SERVER}/create`, {
       method: 'POST',
       body: JSON.stringify(newBlog),
       headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
@@ -52,11 +54,11 @@ const Create = () => {
       {file && <img src={URL.createObjectURL(file)} className="ml-36 h-64 w-[70vw] object-cover rounded-md mb-5" alt="profilepic" />}
       <form className="w-[70vw] " onSubmit={createBlog}>
         <div className="flex flex-col relative ml-36 w-[70vw] mb-5">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
             Upload Image
           </label>
           <input
-            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
             type="file"
             onChange={(e) => setFile(e.target.files[0])}

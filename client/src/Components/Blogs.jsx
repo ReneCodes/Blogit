@@ -2,13 +2,14 @@ import Blog from './Blog';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-const Blogs = () => {
+
+function Blogs () {
   const [blog, setBlog] = useState([]);
   const { search } = useLocation();
 
   useEffect(() => {
     const updateBlog = async () => {
-      const res = await axios.get('http://localhost:3001/blog' + search);
+      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search);
       setBlog(res.data);
     };
     updateBlog();

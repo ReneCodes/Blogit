@@ -3,14 +3,14 @@ import { useEffect, useState, useContext } from 'react';
 
 import Usersolo from '../Components/Usersolo';
 import { AuthContext } from '../App';
-const UserPage = () => {
+
+function UserPage() {
   const { auth } = useContext(AuthContext);
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
     const updateBlog = async () => {
-      const res = await axios.get(`http://localhost:3001/blog?user=${auth?.username}`);
-
+      const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`);
       setBlog(res.data);
     };
     updateBlog();
