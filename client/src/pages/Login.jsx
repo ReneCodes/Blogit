@@ -1,30 +1,23 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { AuthContext } from '../App';
+import { fetchAuthUser, loginUser } from '../utils/AuthUtils';
 
-const Login = () => {
-  const navigate = useNavigate();
+function Login () {
+  let navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setReload } = useContext(AuthContext);
+  const { setReload, setAuth } = useContext(AuthContext);
 
-  async function handleLogin(e) {
+  // CHECKS IF THE USER IS ALREADY AUTHENTICATED WHEN OPENING THE /LOGIN PAGE
+  useEffect(()=>{
+    fetchAuthUser(setAuth, setReload, navigate);
+  }, [])
+
+  function handleLogin(e) {
     e.preventDefault();
-    const res = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    const data = await res.json();
-    if (res.ok) {
-      localStorage.setItem('token', data.token);
-
-      setReload(true);
-      navigate('/');
-    } else {
-      alert('wrong credentials');
-    }
+    loginUser({username, password}, setReload, navigate);
   }
 
   return (

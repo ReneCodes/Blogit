@@ -8,40 +8,25 @@ import avatar from '../images/avatar.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../App';
-const Navbar = () => {
-  const folder = process.env.REACT_APP_IMAGE_URL;
+import { logout, fetchAuthUser } from '../utils/AuthUtils';
+function Navbar() {
 
   let navigate = useNavigate();
-
+  const folder = process.env.REACT_APP_IMAGE_URL;
   const { auth, setAuth, reload, setReload } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchAuthUser = async () => {
-      const res = await fetch('http://localhost:3001/auth', {
-        method: 'GET',
-        headers: {
-          token: localStorage.getItem('token'),
-        },
+    fetchAuthUser(setAuth, setReload)
+      .catch(err => {
+        console.log(err);
       });
-      const data = await res.json();
-
-      if (res.ok) {
-        setAuth(data);
-        setReload(false);
-      } else {
-        setAuth(null);
-      }
-    };
-    fetchAuthUser();
   }, [auth, reload]);
-  const capitalize = (name) => {
-    return name.toUpperCase();
-  };
-  const Logout = () => {
-    localStorage.removeItem('token');
-    setReload(true);
-    navigate('/login');
-  };
+
+  function handleLogout() {
+    logout(setReload, navigate);
+  }
+
+  const capitalize = (name) => name.toUpperCase();
 
   return (
     <nav className="w-full h-12  bg-white sticky top-0 flex items-center font-lora">
@@ -71,7 +56,7 @@ const Navbar = () => {
                   </p>
                 </div>
 
-                <span className="cursor-pointer font-light text-lg ml-10 mr-4" onClick={Logout}>
+                <span className="cursor-pointer font-light text-lg ml-10 mr-4" onClick={handleLogout}>
                   LOGOUT
                 </span>
 

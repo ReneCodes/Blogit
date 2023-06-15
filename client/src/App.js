@@ -1,5 +1,4 @@
 // import logo from './images/logo.png';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
@@ -13,6 +12,7 @@ import UserPage from './pages/UserPage';
 import { createContext, useState } from 'react';
 import Edit from './pages/Edit';
 import Profile from './pages/Profile';
+
 export const AuthContext = createContext();
 function App() {
   const [reload, setReload] = useState(false);

@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-const Register = () => {
+import { fetchAuthUser, registerUser } from '../utils/AuthUtils';
+import { AuthContext } from '../App';
+
+
+function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const { setReload, setAuth } = useContext(AuthContext);
 
   let navigate = useNavigate();
 
+  // CHECKS IF THE USER IS ALREADY AUTHENTICATED WHEN OPENING THE /LOGIN PAGE
+  useEffect(() => {
+    fetchAuthUser(setAuth, setReload, navigate);
+  }, [])
+
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/register', {
-      method: 'POST',
-      body: JSON.stringify({ username, email, password }),
-      headers: { 'Content-Type': 'application/json' },
-    });
-    if (response.status !== 201) {
-      alert('registration failed');
-    }
-    navigate('/login');
+    registerUser({ username, password, email }, navigate);
   }
 
   return (
