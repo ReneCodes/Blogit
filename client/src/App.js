@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
 import UserPage from './pages/UserPage';
+import ServerDown from './pages/ServerDown';
 import { createContext, useState } from 'react';
 import Edit from './pages/Edit';
 import Profile from './pages/Profile';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/edit/:id" element={<Edit />}></Route>
           {auth && <Route path="/profile" element={<Profile />}></Route>}
           {auth && <Route path="/userpage" element={<UserPage />}></Route>}
+          <Route path='/server_down' element={<ServerDown />}></Route>
           <Route path='*' element={<Login />}></Route>
         </Routes>
       </BrowserRouter>

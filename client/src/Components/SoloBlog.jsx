@@ -16,7 +16,7 @@ function SoloBlog () {
   const folder = `${process.env.REACT_APP_IMAGE_URL}/`;
 
   useEffect(() => {
-    getUserBlog(path, setBlog);
+    getUserBlog(path, setBlog, navigate);
   }, [path]);
 
   const capitalize = (name) => {

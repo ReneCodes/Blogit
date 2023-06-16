@@ -1,15 +1,16 @@
 import Blog from './Blog';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { searchBlog } from '../utils/BlogUtils';
 
 function Blogs () {
+
+  const navigate = useNavigate();
   const [blog, setBlog] = useState([]);
   const { search } = useLocation();
 
   useEffect(() => {
-    searchBlog(search, setBlog);
+    searchBlog(search, setBlog, navigate);
   }, [search]);
 
   return (

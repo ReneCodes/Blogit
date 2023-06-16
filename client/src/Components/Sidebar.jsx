@@ -1,14 +1,15 @@
 import React from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SidebarContent from './SidebarContent';
 import {getBlog} from "../utils/BlogUtils"
 const Sidebar = () => {
+
+  const navigate = useNavigate();
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
-    getBlog(setBlog);
+    getBlog(setBlog, navigate);
   }, []);
 
   return (

@@ -3,13 +3,16 @@ import { useEffect, useState, useContext } from 'react';
 import Usersolo from '../Components/Usersolo';
 import { AuthContext } from '../App';
 import { getUserBlogs } from "../utils/BlogUtils.js";
+import { useNavigate } from 'react-router-dom';
 
 function UserPage() {
+
+  let navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
-    getUserBlogs(auth, setBlog);
+    getUserBlogs(auth, setBlog, navigate);
   }, []);
 
   return (

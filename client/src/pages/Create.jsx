@@ -1,7 +1,7 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { createBlog } from '../utils/BlogUtils';
 
 function Create () {
@@ -11,6 +11,7 @@ function Create () {
   const [content, setContent] = useState('');
   const [file, setFile] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const naigate = useNavigate();
 
   const onOptionChange = (e) => {
     setCategory(e.target.value);
@@ -19,7 +20,7 @@ function Create () {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newBlog = { title, content, category };
-    createBlog(newBlog, file, setRedirect)
+    createBlog(newBlog, file, setRedirect, naigate);
   }
 
   if (redirect) {
