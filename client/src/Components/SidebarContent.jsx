@@ -8,7 +8,7 @@ const SidebarContent = (props) => {
     <>
       <div className="sidebarItem">
         <Link to={`/blog/${_id}`}>
-          <img src={folder + image} className="mt-3.5 w-full h-44 object-cover rounded-md" alt="profilepic" />
+          <img src={folder+ '/' + image} className="mt-3.5 w-full h-44 object-cover rounded-md" alt="profilepic" />
         </Link>
         <p className="text-sm items-center">
           <Link to={`/blog/${_id}`}>{title}</Link>

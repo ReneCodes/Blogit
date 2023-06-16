@@ -1,16 +1,18 @@
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-const Blog = (props) => {
+function Blog (props) {
   const folder = process.env.REACT_APP_IMAGE_URL;
   const { title, _id, content, image, createdAt, author, category } = props.blog;
+
   const capitalize = (name) => {
     return name?.toUpperCase();
   };
+
   return (
     <article className="w-96 mt-0 mb-10 mx-6">
       <div>
-        <img src={folder + image} className="w-full h-64 object-cover rounded-md" alt="profilepic" />
+        <img src={folder + '/' + image} className="w-full h-64 object-cover rounded-md" alt="profilepic" />
       </div>
       <div className="flex flex-col items-center">
         <ul>

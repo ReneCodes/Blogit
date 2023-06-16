@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const response = (res, status, result) => {
   res.status(status).json(result);
 };
+
 async function userGetRouter(req, res) {
   try {
     const user = await User.find();
@@ -89,6 +90,7 @@ async function userProfileUpdateRouter(req, res) {
     .then((result) => response(res, 200, { msg: 'user updated', user: result }))
     .catch((error) => response(res, 400, error));
 }
+
 async function userDeleteRouter(req, res) {
   // const { username, image, password, email } = req.body;
 
@@ -100,4 +102,12 @@ async function userDeleteRouter(req, res) {
 async function userAuthRouter(req, res) {
   res.status(200).json(req.auth);
 }
-module.exports = { userPostRouter, userGetRouter, userLoginRouter, userProfileRouter, userProfileUpdateRouter, userAuthRouter, userDeleteRouter };
+module.exports = {
+  userPostRouter,
+  userGetRouter,
+  userLoginRouter,
+  userProfileRouter,
+  userProfileUpdateRouter,
+  userAuthRouter,
+  userDeleteRouter
+};

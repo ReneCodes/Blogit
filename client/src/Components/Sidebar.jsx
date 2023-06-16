@@ -3,15 +3,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SidebarContent from './SidebarContent';
+import {getBlog} from "../utils/BlogUtils"
 const Sidebar = () => {
   const [blog, setBlog] = useState([]);
+
   useEffect(() => {
-    const fetchBlog = async () => {
-      const res = await axios.get('http://localhost:3001/blog');
-      setBlog(res.data.slice(6, -2));
-    };
-    fetchBlog();
+    getBlog(setBlog);
   }, []);
+
   return (
     <div style={{ flex: 3 }} className="m-5 pb-8 bg-gray-100 flex rounded-lg flex-col items-center h-full">
       <div className="sidebarItem">

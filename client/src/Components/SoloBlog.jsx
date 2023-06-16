@@ -1,42 +1,36 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../App';
+import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
-const SoloBlog = () => {
+function SoloBlog () {
+
   const navigate = useNavigate();
   const location = useLocation();
   const { auth } = useContext(AuthContext);
   const path = location.pathname.split('/')[2];
   const [blog, setBlog] = useState({});
-  const folder = 'http://localhost:3001/images/';
+  const folder = `${process.env.REACT_APP_IMAGE_URL}/`;
+
   useEffect(() => {
-    const fetchBlog = async () => {
-      const res = await axios.get(`http://localhost:3001/blog/${path}`);
-      setBlog(res.data);
-    };
-    fetchBlog();
+    getUserBlog(path, setBlog);
   }, [path]);
+
   const capitalize = (name) => {
     return name?.toUpperCase();
   };
+
   const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:3001/blog/${blog._id}`, {
-        headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
-        data: {},
-      });
-      navigate('/');
-    } catch (err) {}
+    deleteBlog(blog, navigate);
   };
 
   return (
     <div className="m-10">
       <div>
-        <img src={folder + blog.image} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
+        <img src={folder + (blog.image ? blog.image : '')} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">
           {blog.title}
           {auth?.username === blog.author?.username && (
