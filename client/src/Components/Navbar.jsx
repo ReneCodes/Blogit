@@ -75,9 +75,7 @@ function Navbar() {
           <ul className="cursor-pointer font-light text-lg mx-8">
             {!auth && (
               <>
-                <Link to="/login" className="mr-5">
-                  LOGIN
-                </Link>
+                <Link to="/login" className="mr-5">LOGIN</Link>
                 <Link to="/register">REGISTER</Link>
               </>
             )}
