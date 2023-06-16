@@ -6,7 +6,7 @@ import moment from 'moment';
 import { AuthContext } from '../App';
 import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
-function SoloBlog () {
+function SoloBlog() {
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +33,7 @@ function SoloBlog () {
         <img src={folder + (blog.image ? blog.image : '')} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">
           {blog.title}
-          {auth?.username === blog.author?.username && (
+          {auth && blog && blog.author && auth?.username === blog.author?.username && (
             <div className="float-right text-base">
               <Link to={`/edit/${blog._id}`}>
                 <FontAwesomeIcon icon={faUserPen} className="cursor-pointer  ml-3" />
