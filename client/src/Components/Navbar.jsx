@@ -19,7 +19,7 @@ function Navbar() {
   useEffect(() => {
     fetchAuthUser(setAuth, setReload)
       .catch(err => { console.log(err); });
-  }, [auth, reload]);
+  }, []);
 
   function handleLogout() {
     logout(setReload, navigate);

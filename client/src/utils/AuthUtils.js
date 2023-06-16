@@ -11,14 +11,15 @@ export const fetchAuthUser = async (setAuth, setReload, navigate) => {
 
     if (res.ok) {
       setAuth(data);
-      setReload(false);
-      navigate && navigate('/');
+      setReload(true);
     } else {
       setAuth(null);
     }
 
     return { res, data };
   } catch (error) {
+    console.log(error);
+    setAuth(null);
     navigate('/server_down');
   }
 
