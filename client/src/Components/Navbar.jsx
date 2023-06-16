@@ -14,7 +14,7 @@ function Navbar() {
 
   let navigate = useNavigate();
   const folder = process.env.REACT_APP_IMAGE_URL;
-  const { auth, setAuth, reload, setReload } = useContext(AuthContext);
+  const { auth, setAuth, setReload } = useContext(AuthContext);
 
   useEffect(() => {
     fetchAuthUser(setAuth, setReload)
