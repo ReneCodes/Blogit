@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { searchBlog } from '../utils/BlogUtils';
 
-function Blogs () {
+function Blogs() {
 
   const navigate = useNavigate();
   const [blog, setBlog] = useState([]);
@@ -15,6 +15,13 @@ function Blogs () {
 
   return (
     <div style={{ flex: 9 }}>
+      {blog.length === 0 &&
+        <div className='flex flex-col m-5 p-5 align-center justify-center w-1/2'>
+          <h2 className='m-auto font-semibold text-2xl	cursor-pointer '>
+            No posts to show, yet. Create one <span onClick={() => navigate('/create')} className='text-cyan-400'>here</span>.
+          </h2>
+        </div>
+      }
       <div className="flex flex-wrap m-5">{blog && blog.map((blog) => <Blog key={blog._id} blog={blog} />)}</div>
     </div>
   );
