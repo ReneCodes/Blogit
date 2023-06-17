@@ -1,33 +1,37 @@
 export const fetchAuthUser = async (setAuth, setReload, navigate) => {
 
-  try {
-    const res = await fetch(`${process.env.REACT_APP_SERVER}/auth`, {
-      method: 'GET',
-      headers: {
-        token: localStorage.getItem('token'),
-      },
-    });
-    const data = await res.json();
 
-    if (res.ok) {
-      setAuth(data);
-      setReload(true);
-    } else {
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER}/auth`, {
+        method: 'GET',
+        headers: { token },
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        setAuth(data);
+        setReload(true);
+      } else {
+        setAuth(null);
+      }
+
+      return { res, data };
+    } catch (error) {
+      console.log(error);
       setAuth(null);
+      navigate('/server_down');
     }
-
-    return { res, data };
-  } catch (error) {
-    console.log(error);
-    setAuth(null);
-    navigate('/server_down');
   }
+
 
 };
 
-export const logout = async (setReload, navigate) => {
+export const logout = async (setReload, navigate, setAuth) => {
   try {
     localStorage.removeItem('token');
+    setAuth(null)
     setReload(true);
     navigate('/login');
   } catch (error) {
@@ -35,7 +39,7 @@ export const logout = async (setReload, navigate) => {
   }
 };
 
-export const loginUser = async (credentials, setReload, navigate) => {
+export const loginUser = async (credentials, setReload, navigate, setAuth) => {
 
   try {
     const res = await fetch(`${process.env.REACT_APP_SERVER}/login`, {
@@ -47,6 +51,7 @@ export const loginUser = async (credentials, setReload, navigate) => {
     const data = await res.json();
     if (res.ok) {
       localStorage.setItem('token', data.token);
+      setAuth(data)
       setReload(true);
       navigate('/');
     } else {
@@ -59,7 +64,7 @@ export const loginUser = async (credentials, setReload, navigate) => {
 
 };
 
-export const registerUser = async (credentials, setReload, navigate) => {
+export const registerUser = async (credentials, setReload, navigate, setAuth) => {
 
   try {
     const res = await fetch(`${process.env.REACT_APP_SERVER}/register`, {
@@ -72,7 +77,7 @@ export const registerUser = async (credentials, setReload, navigate) => {
       alert('registration failed');
     } else {
       navigate('/login');
-      loginUser(credentials, setReload, navigate)
+      loginUser(credentials, setReload, navigate, setAuth)
     }
   } catch (error) {
     navigate('/server_down');

@@ -18,39 +18,37 @@ function Register() {
     fetchAuthUser(setAuth, setReload, navigate);
   }, [])
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    registerUser({ username, password, email }, setReload, navigate);
+    registerUser({ username, password, email }, setReload, navigate, setAuth);
   }
+
+  const inputs = [
+    ['Username', 'text', username, setUsername],
+    ['Email', 'email', email, setEmail],
+    ['Password', 'password', password, setPassword],
+  ];
+
+  const allInputs = inputs.map(([item, type, state, setter]) => {
+    return (
+      <div className='flex flex-col' key={item}>
+        <label className="my-2.5 mx-0">{item}</label>
+        <input
+          className="p-2.5 bg-white border-none rounded-lg focus:outline-none"
+          type={type}
+          placeholder={`Create your ${item}...`}
+          value={state}
+          onChange={(e) => setter(e.target.value)}
+        />
+      </div>
+    )
+  });
 
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <span className="text-5xl">Register</span>
       <form className="mt-5 flex flex-col" onSubmit={handleSubmit}>
-        <label className="my-2.5 mx-0">Username</label>
-        <input
-          className="p-2.5 bg-white border-none rounded-lg focus:outline-none"
-          type="text"
-          placeholder="Create your username..."
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label className="my-2.5 mx-0">Email</label>
-        <input
-          className="p-2.5 bg-white border-none rounded-lg focus:outline-none"
-          type="email"
-          placeholder="Create your email..."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <label className="my-2.5 mx-0">Password</label>
-        <input
-          className="p-2.5 bg-white border-none rounded-lg focus:outline-none"
-          type="password"
-          placeholder="Create your password..."
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        {allInputs}
         <button className="mt-5 cursor-pointer bg-lime-600 text-white p-2.5 border-none rounded-lg text-center">Register</button>
         <span className="mt-2.5">
           Already have an account?

@@ -22,7 +22,7 @@ function Navbar() {
   }, []);
 
   function handleLogout() {
-    logout(setReload, navigate);
+    logout(setReload, navigate, setAuth);
   }
 
   const capitalize = (name) => name.toUpperCase();

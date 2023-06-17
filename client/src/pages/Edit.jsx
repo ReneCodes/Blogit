@@ -10,7 +10,7 @@ const Edit = () => {
   const [redirect, setRedirect] = useState(false);
   const [file, setFile] = useState('');
 
-  async function changeBlog(e, title, content, category) {
+  function changeBlog(e, title, content, category) {
     e.preventDefault();
     const newBlog = { title, content, category, };
     updateBlog(file, newBlog, id, setRedirect);
