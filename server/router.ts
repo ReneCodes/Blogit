@@ -18,7 +18,7 @@ import {
   blogDeleteRouter,
   blogUpdateRouter,
   blogGetByIdRouter,
-} from "./controllers/blogController.js";
+} from "./controllers/blogController";
 
 import getAuth from "./middleware/auth.js";
 
@@ -27,7 +27,7 @@ router.post("/register", userPostRouter as RequestHandler);
 router.get("/users", userGetRouter as RequestHandler);
 router.post("/login", userLoginRouter as RequestHandler);
 router.get("/profile/:id", userProfileRouter as RequestHandler);
-router.put("/profile/:id", getAuth, userProfileUpdateRouter as RequestHandler);
+router.put("/profile/:id", getAuth, userProfileUpdateRouter);
 router.get("/auth", getAuth, userAuthRouter as RequestHandler);
 router.delete("/profile/:id", getAuth, userDeleteRouter as RequestHandler);
 
