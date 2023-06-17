@@ -1,33 +1,36 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var multer = require("multer");
-var userController_js_1 = require("./controllers/userController.js");
-var blogController_js_1 = require("./controllers/blogController.js");
-var auth_1 = require("./middleware/auth");
-var router = (0, express_1.Router)();
+const express_1 = require("express");
+const multer_1 = __importDefault(require("multer"));
+const userController_js_1 = require("./controllers/userController.js");
+const blogController_1 = require("./controllers/blogController");
+const auth_js_1 = __importDefault(require("./middleware/auth.js"));
+const router = (0, express_1.Router)();
 router.post("/register", userController_js_1.userPostRouter);
 router.get("/users", userController_js_1.userGetRouter);
 router.post("/login", userController_js_1.userLoginRouter);
 router.get("/profile/:id", userController_js_1.userProfileRouter);
-router.put("/profile/:id", auth_1.default, userController_js_1.userProfileUpdateRouter);
-router.get("/auth", auth_1.default, userController_js_1.userAuthRouter);
-router.delete("/profile/:id", auth_1.default, userController_js_1.userDeleteRouter);
-router.get("/blog", blogController_js_1.blogGetRouter);
-router.get("/blog/:id", blogController_js_1.blogGetByIdRouter);
-router.post("/create", auth_1.default, blogController_js_1.blogPostRouter);
-router.delete("/blog/:id", auth_1.default, blogController_js_1.blogDeleteRouter);
-router.put("/edit/:id", auth_1.default, blogController_js_1.blogUpdateRouter);
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+router.put("/profile/:id", auth_js_1.default, userController_js_1.userProfileUpdateRouter);
+router.get("/auth", auth_js_1.default, userController_js_1.userAuthRouter);
+router.delete("/profile/:id", auth_js_1.default, userController_js_1.userDeleteRouter);
+router.get("/blog", blogController_1.blogGetRouter);
+router.get("/blog/:id", blogController_1.blogGetByIdRouter);
+router.post("/create", auth_js_1.default, blogController_1.blogPostRouter);
+router.delete("/blog/:id", auth_js_1.default, blogController_1.blogDeleteRouter);
+router.put("/edit/:id", auth_js_1.default, blogController_1.blogUpdateRouter);
+const storage = multer_1.default.diskStorage({
+    destination: (req, file, cb) => {
         cb(null, "Images");
     },
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
         cb(null, req.body.name);
     },
 });
-var upload = multer({ storage: storage });
-router.post("/upload", upload.single("file"), function (req, res) {
+const upload = (0, multer_1.default)({ storage: storage });
+router.post("/upload", upload.single("file"), (req, res) => {
     res.status(200).json("File has been uploaded");
 });
 module.exports = router;
