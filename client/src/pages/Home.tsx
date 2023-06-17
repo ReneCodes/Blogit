@@ -1,7 +1,10 @@
+import { FC } from 'react';
+
 import Blogs from '../Components/Blogs';
 import Main from '../Components/Main';
 import Sidebar from '../Components/Sidebar';
-const Home = () => {
+
+const Home : FC = () => {
   return (
     <div>
       <Main />

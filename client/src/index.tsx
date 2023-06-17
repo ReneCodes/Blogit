@@ -5,7 +5,7 @@ import App from './App';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <GoogleOAuthProvider clientId="499744852892-skivubqevd7mk9jmclv43se4n23d61nt.apps.googleusercontent.com">
     <React.StrictMode>
