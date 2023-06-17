@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = require("mongoose");
+var dotenv = require("dotenv");
 dotenv.config();
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("connected to db");
-  })
-  .catch((err) => console.log(err));
-
-export default mongoose;
+if (process.env.MONGO_URL) {
+    mongoose_1.default
+        .connect(process.env.MONGO_URL, {})
+        .then(function () {
+        console.log("connected to db");
+    })
+        .catch(function (err) { return console.log(err); });
+}
+exports.default = mongoose_1.default;
