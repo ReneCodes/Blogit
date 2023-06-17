@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import db from "./index";
 
 export interface IBlog extends Document {
   title: string;
@@ -19,6 +20,6 @@ const blogSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const Blog = mongoose.model<IBlog>("Blog", blogSchema);
+const Blog = db.model<IBlog>("Blog", blogSchema);
 
 export default Blog;

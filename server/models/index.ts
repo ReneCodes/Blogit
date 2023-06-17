@@ -1,13 +1,19 @@
-import mongoose, { ConnectOptions } from "mongoose";
-const dotenv = require("dotenv");
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 dotenv.config();
 
-if (process.env.MONGO_URL) {
-  mongoose
-    .connect(process.env.MONGO_URL, {} as ConnectOptions)
-    .then(() => {
-      console.log("connected to db");
-    })
-    .catch((err) => console.log(err));
-}
+// mongoose
+//   // @ts-ignore
+//   .connect(process.env.MONGO_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => {
+//     console.log("connected to db");
+//   })
+//   .catch((err) => console.log(err));
+
+// @ts-ignore
+mongoose.connect(process.env.MONGO_URL, console.log("Connected to DB"));
+
 export default mongoose;
