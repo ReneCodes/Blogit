@@ -1,6 +1,13 @@
-const mongoose = require('./index');
+import mongoose, { Schema, Document } from "mongoose";
 
-const UserSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  username: string;
+  email: string;
+  password: string;
+  image?: string;
+}
+
+const UserSchema: Schema = new Schema(
   {
     username: { type: String, required: true },
     email: { type: String, required: true },
@@ -10,6 +17,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model<IUser>("User", UserSchema);
 
 module.exports = User;
