@@ -1,25 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, FC } from 'react';
 import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../App';
 import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
-function SoloBlog() {
+import { BlogInterface } from '../model';
+import { AuthContextType } from '../@types/auth';
+
+const SoloBlog: FC = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { auth } = useContext(AuthContext);
+  const { auth } = useContext<AuthContextType>(AuthContext);
+  console.log("AUTH",auth)
   const path = location.pathname.split('/')[2];
-  const [blog, setBlog] = useState({});
+  const [blog, setBlog] = useState<BlogInterface>({} as BlogInterface);
   const folder = `${process.env.REACT_APP_IMAGE_URL}/`;
 
   useEffect(() => {
     getUserBlog(path, setBlog, navigate);
   }, [path]);
 
-  const capitalize = (name) => {
+  const capitalize = (name : string) => {
     return name?.toUpperCase();
   };
 

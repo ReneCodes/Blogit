@@ -1,11 +1,18 @@
+import { FC } from 'react';
+import { BlogInterface } from '../model';
 import { Link } from 'react-router-dom';
+
 import moment from 'moment';
 
-function Blog (props) {
-  const folder = process.env.REACT_APP_IMAGE_URL;
-  const { title, _id, content, image, createdAt, author, category } = props.blog;
+interface Props {
+  blog: BlogInterface
+}
 
-  const capitalize = (name) => {
+const Blog: FC<Props> = ({blog}) => {
+  const folder = process.env.REACT_APP_IMAGE_URL;
+  const { title, _id, content, image, createdAt, author, category } = blog;
+
+  const capitalize = ( name: string ) => {
     return name?.toUpperCase();
   };
 

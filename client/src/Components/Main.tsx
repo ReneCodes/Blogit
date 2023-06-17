@@ -1,6 +1,6 @@
-import React from 'react';
+import {FC} from 'react';
 
-const Main = () => {
+const Main : FC = () => {
   return (
     <main>
       <span className="flex flex-col font-open items-center text-3xl font-semibold italic color text-gray-800">Welcome to Blogit</span>

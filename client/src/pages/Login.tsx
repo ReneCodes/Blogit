@@ -1,30 +1,34 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, FC } from 'react';
 
 import { AuthContext } from '../App';
 import { fetchAuthUser, loginUser } from '../utils/AuthUtils';
+import { AuthContextType } from '../@types/auth';
 
-function Login() {
+const Login: FC = () => {
   let navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { setReload, setAuth } = useContext(AuthContext);
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const { setReload, setAuth } = useContext<AuthContextType>(AuthContext);
 
   // CHECKS IF THE USER IS ALREADY AUTHENTICATED WHEN OPENING THE /LOGIN PAGE
   useEffect(() => {
     fetchAuthUser(setAuth, setReload, navigate);
   }, [])
 
-  function handleLogin(e) {
+  function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     loginUser({ username, password }, setReload, navigate, setAuth);
   }
 
-  const inputs = [
+  type InputTuple = [string,string,string, React.Dispatch<React.SetStateAction<string>>]
+
+  const inputs: [InputTuple,InputTuple] = [
     ['Username', 'text', username, setUsername],
     ['Password', 'password', password, setPassword],
   ];
+
   const allInputs = inputs.map(([item, type, state, setter]) => {
     return (
       <div className='flex flex-col' key={item}>
