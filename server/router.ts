@@ -20,7 +20,7 @@ import {
   blogGetByIdRouter,
 } from "./controllers/blogController";
 
-import getAuth from "./middleware/auth.js";
+import { getAuth } from "./middleware/auth";
 
 const router = Router();
 router.post("/register", userPostRouter as RequestHandler);
