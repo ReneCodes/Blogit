@@ -7,20 +7,20 @@ const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const userController_js_1 = require("./controllers/userController.js");
 const blogController_1 = require("./controllers/blogController");
-const auth_js_1 = __importDefault(require("./middleware/auth.js"));
+const auth_1 = require("./middleware/auth");
 const router = (0, express_1.Router)();
 router.post("/register", userController_js_1.userPostRouter);
 router.get("/users", userController_js_1.userGetRouter);
 router.post("/login", userController_js_1.userLoginRouter);
 router.get("/profile/:id", userController_js_1.userProfileRouter);
-router.put("/profile/:id", auth_js_1.default, userController_js_1.userProfileUpdateRouter);
-router.get("/auth", auth_js_1.default, userController_js_1.userAuthRouter);
-router.delete("/profile/:id", auth_js_1.default, userController_js_1.userDeleteRouter);
+router.put("/profile/:id", auth_1.getAuth, userController_js_1.userProfileUpdateRouter);
+router.get("/auth", auth_1.getAuth, userController_js_1.userAuthRouter);
+router.delete("/profile/:id", auth_1.getAuth, userController_js_1.userDeleteRouter);
 router.get("/blog", blogController_1.blogGetRouter);
 router.get("/blog/:id", blogController_1.blogGetByIdRouter);
-router.post("/create", auth_js_1.default, blogController_1.blogPostRouter);
-router.delete("/blog/:id", auth_js_1.default, blogController_1.blogDeleteRouter);
-router.put("/edit/:id", auth_js_1.default, blogController_1.blogUpdateRouter);
+router.post("/create", auth_1.getAuth, blogController_1.blogPostRouter);
+router.delete("/blog/:id", auth_1.getAuth, blogController_1.blogDeleteRouter);
+router.put("/edit/:id", auth_1.getAuth, blogController_1.blogUpdateRouter);
 const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "Images");
