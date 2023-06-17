@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import * as multer from "multer";
+import multer from "multer";
 import { RequestHandler } from "express";
 
 import {
@@ -20,7 +20,7 @@ import {
   blogGetByIdRouter,
 } from "./controllers/blogController.js";
 
-import getAuth from "./middleware/auth";
+import getAuth from "./middleware/auth.js";
 
 const router = Router();
 router.post("/register", userPostRouter as RequestHandler);

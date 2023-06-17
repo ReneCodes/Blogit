@@ -1,10 +1,10 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import * as express from "express";
+import express from "express";
 import { Application, Request, Response, NextFunction } from "express";
-import * as cookieParser from "cookie-parser";
-import * as cors from "cors";
-import * as path from "path";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import path from "path";
 const app: Application = express();
 const port = process.env.PORT;
 
