@@ -14,15 +14,15 @@ function Navbar() {
 
   let navigate = useNavigate();
   const folder = process.env.REACT_APP_IMAGE_URL;
-  const { auth, setAuth, reload, setReload } = useContext(AuthContext);
+  const { auth, setAuth, setReload } = useContext(AuthContext);
 
   useEffect(() => {
     fetchAuthUser(setAuth, setReload)
       .catch(err => { console.log(err); });
-  }, [auth, reload]);
+  }, []);
 
   function handleLogout() {
-    logout(setReload, navigate);
+    logout(setReload, navigate, setAuth);
   }
 
   const capitalize = (name) => name.toUpperCase();
@@ -75,9 +75,7 @@ function Navbar() {
           <ul className="cursor-pointer font-light text-lg mx-8">
             {!auth && (
               <>
-                <Link to="/login" className="mr-5">
-                  LOGIN
-                </Link>
+                <Link to="/login" className="mr-5">LOGIN</Link>
                 <Link to="/register">REGISTER</Link>
               </>
             )}

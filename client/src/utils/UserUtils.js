@@ -8,7 +8,9 @@ export const deleteUser = async (auth, navigate) => {
     });
     navigate('/');
     localStorage.removeItem('token')
-  } catch (err) {}
+  } catch (err) {
+    navigate('/server_down')
+  }
 }
 
 export const updateUserInformation = async (updateUser, file, auth, navigate) => {
@@ -21,17 +23,18 @@ export const updateUserInformation = async (updateUser, file, auth, navigate) =>
     updateUser.image = filename;
     try {
       await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
-    } catch (err) {}
-  }
-
-  const response = await fetch(`${process.env.REACT_APP_SERVER}/profile/${auth._id}`, {
-    method: 'PUT',
-    body: JSON.stringify(updateUser),
-    headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
-    credentials: 'include',
-  });
-  if (response.ok) {
-    navigate('/');
+      const response = await fetch(`${process.env.REACT_APP_SERVER}/profile/${auth._id}`, {
+        method: 'PUT',
+        body: JSON.stringify(updateUser),
+        headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
+        credentials: 'include',
+      });
+      if (response.ok) {
+        navigate('/');
+      }
+    } catch (err) {
+      navigate('/server_down');
+    }
   }
 
 }
