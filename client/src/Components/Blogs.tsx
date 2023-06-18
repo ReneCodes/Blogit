@@ -1,14 +1,15 @@
 import Blog from './Blog';
 
 import { useEffect, useState, FC } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, NavigateFunction } from 'react-router-dom';
 import { searchBlog } from '../utils/BlogUtils';
 import { BlogInterface } from '../model';
 
 
 const Blogs: FC = () => {
 
-  const navigate = useNavigate();
+
+  let navigate: NavigateFunction = useNavigate();
   const [blogs, setBlogs] = useState<BlogInterface[]>([]);
   const { search } = useLocation();
 
