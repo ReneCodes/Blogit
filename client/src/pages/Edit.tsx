@@ -1,16 +1,19 @@
 import 'react-quill/dist/quill.snow.css';
-import { useState } from 'react';
+import React,{ useState,FormEvent } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { updateBlog } from "../utils/BlogUtils";
-import CreateChangeBlog from '../Components/ChangeCreateBlog.jsx';
+import CreateChangeBlog from '../Components/ChangeCreateBlog';
 
-const Edit = () => {
+const Edit : React.FC = () => {
+  type BlogParams = {
+    id: string | undefined
+  }
 
-  const { id } = useParams();
+  const { id } = useParams<BlogParams>();
   const [redirect, setRedirect] = useState(false);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState<File | undefined>();
 
-  function changeBlog(e, title, content, category) {
+  function changeBlog(e: FormEvent, title : string, content : string, category : string) {
     e.preventDefault();
     const newBlog = { title, content, category, };
     updateBlog(file, newBlog, id, setRedirect);

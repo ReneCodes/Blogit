@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPen } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import avatar from '../images/avatar.jpeg';
 
 import { AuthContext } from '../App';
@@ -10,16 +10,17 @@ import { fetchAuthUser } from '../utils/AuthUtils';
 
 import { AuthContextType } from '../@types/auth';
 
-function Profile() {
-  type FileState = File | undefined
+const Profile : React.FC = () => {
 
   const folder = process.env.REACT_APP_IMAGE_URL;
-  const [file, setFile] = useState<FileState>(undefined);
+  const [file, setFile] = useState<File | undefined>(undefined);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { auth, setAuth, setReload } = useContext<AuthContextType>(AuthContext);
-  let navigate = useNavigate();
+  let navigate: NavigateFunction = useNavigate();
+
+  const inputClassName = "py-5 px-2.5 my-2 h-5 border-b-2 border-b-gray-200 outline-none focus:border-b-gray-500"
 
   useEffect(() => {
     fetchAuthUser(setAuth, setReload);
@@ -41,7 +42,7 @@ function Profile() {
     deleteUser(auth, navigate);
   };
 
-  const inputClassName = "py-5 px-2 mt-2 mb-2 h-5 border-b-2 border-b-gray-200 outline-none focus:border-b-gray-500"
+
 
   return (
     <div className="mt-16 relative flex justify-center align-middle">

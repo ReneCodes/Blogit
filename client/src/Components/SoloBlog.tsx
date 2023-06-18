@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState, useContext, FC } from 'react';
 import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Link, NavigateFunction } from 'react-router-dom';
 import moment from 'moment';
 import { AuthContext } from '../App';
 import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
@@ -11,7 +11,7 @@ import { AuthContextType } from '../@types/auth';
 
 const SoloBlog: FC = () => {
 
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const location = useLocation();
   const { auth } = useContext<AuthContextType>(AuthContext);
   console.log("AUTH",auth)

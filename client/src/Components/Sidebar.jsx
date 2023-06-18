@@ -13,7 +13,7 @@ const Sidebar = () => {
   }, []);
 
   const options = ['Music', 'Travel', 'Technology', 'Science', 'Art', 'Sports', 'Food'];
-  const allItems= options.map((item) => {
+  const allItems = options.map((item) => {
     return (
       <li className='listItems' key={item}>
         <Link to={`/?cat=${item}`}>{item}</Link>

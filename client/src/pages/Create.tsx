@@ -1,17 +1,16 @@
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useState, FC, FormEvent } from 'react';
+import { Navigate, useNavigate, NavigateFunction } from 'react-router-dom';
 import { createBlog } from '../utils/BlogUtils';
-import CreateChangeBlog from '../Components/ChangeCreateBlog.jsx';
+import CreateChangeBlog from '../Components/ChangeCreateBlog';
 
-function Create() {
+const Create : FC = () => {
 
-  const [redirect, setRedirect] = useState(false);
-  const navigate = useNavigate();
-  const [file, setFile] = useState('');
+  const [redirect, setRedirect] = useState<boolean>(false);
+  const navigate: NavigateFunction = useNavigate();
+  const [file, setFile] = useState<File>();
 
-  const handleSubmit = (e, title, content, category) => {
+  const handleSubmit = (e: FormEvent, title : string, content : string, category : string) => {
     e.preventDefault();
     const newBlog = { title, content, category };
     createBlog(newBlog, file, setRedirect, navigate);
