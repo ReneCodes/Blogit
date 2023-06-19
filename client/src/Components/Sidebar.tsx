@@ -1,12 +1,14 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, useNavigate, NavigateFunction } from 'react-router-dom';
+import { useEffect, useState, FC } from 'react';
 import SidebarContent from './SidebarContent';
 import { getBlog } from "../utils/BlogUtils"
+import { BlogInterface } from '../@types/model';
+
+
 const Sidebar = () => {
 
-  const navigate = useNavigate();
-  const [blog, setBlog] = useState([]);
+  const navigate : NavigateFunction = useNavigate();
+  const [blog, setBlog] = useState<BlogInterface[]>([]);
 
   useEffect(() => {
     getBlog(setBlog, navigate);

@@ -1,7 +1,13 @@
-import React from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { BlogInterface } from '../@types/model';
 
-const SidebarContent = (props) => {
+interface Props {
+  key: string,
+  blog: BlogInterface
+}
+
+const SidebarContent : FC<Props> = (props) => {
   const { title, _id, content, image } = props.blog;
   const folder = process.env.REACT_APP_IMAGE_URL;
   return (

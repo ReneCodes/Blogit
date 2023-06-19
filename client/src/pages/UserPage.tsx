@@ -1,15 +1,17 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, FC } from 'react';
 
 import Usersolo from '../Components/Usersolo';
 import { AuthContext } from '../App';
 import { getUserBlogs } from "../utils/BlogUtils.js";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
+import { BlogInterface } from '../@types/model';
+import { AuthContextType } from '../@types/auth';
 
-function UserPage() {
+const UserPage: FC = () => {
 
-  let navigate = useNavigate();
-  const { auth } = useContext(AuthContext);
-  const [blog, setBlog] = useState([]);
+  let navigate : NavigateFunction = useNavigate();
+  const { auth } = useContext<AuthContextType>(AuthContext);
+  const [blog, setBlog] = useState<BlogInterface[]>([]);
 
   useEffect(() => {
     getUserBlogs(auth, setBlog, navigate);

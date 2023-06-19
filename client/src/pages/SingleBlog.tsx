@@ -1,7 +1,7 @@
-import React from 'react';
+import {FC} from 'react';
 import SoloBlog from '../Components/SoloBlog';
 
-const SingleBlog = () => {
+const SingleBlog : FC = () => {
   return (
     <div>
       <SoloBlog />
