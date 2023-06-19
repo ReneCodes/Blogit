@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
 	const inputClassName = 'py-5 px-2.5 my-2 h-5 border-b-2 border-b-gray-200 outline-none focus:border-b-gray-500';
 
 	useEffect(() => {
-		fetchAuthUser(setAuth, setReload);
+		fetchAuthUser(setAuth, setReload, navigate);
 	}, []);
 
 	const handleSubmit = (e: React.FormEvent) => {
