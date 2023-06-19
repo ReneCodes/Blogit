@@ -6,7 +6,7 @@ import moment from 'moment';
 import { AuthContext } from '../App';
 import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
-import { BlogInterface } from '../model';
+import { BlogInterface } from '../@types/model';
 import { AuthContextType } from '../@types/auth';
 
 const SoloBlog: FC = () => {

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { BlogInterface } from '../model';
+import { BlogInterface } from '../@types/model';
 import { Link } from 'react-router-dom';
 
 import moment from 'moment';

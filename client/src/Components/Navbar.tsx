@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect, FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../App';
 import { logout, fetchAuthUser } from '../utils/AuthUtils';
 
-function Navbar() {
+const Navbar: FC = () => {
 
   let navigate = useNavigate();
   const folder = process.env.REACT_APP_IMAGE_URL;
@@ -25,7 +25,7 @@ function Navbar() {
     logout(setReload, navigate, setAuth);
   }
 
-  const capitalize = (name) => name.toUpperCase();
+  const capitalize = (name: string) => name.toUpperCase();
 
   return (
     <nav className="w-full h-12  bg-white sticky top-0 flex items-center font-lora">

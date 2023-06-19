@@ -3,7 +3,7 @@ import Blog from './Blog';
 import { useEffect, useState, FC } from 'react';
 import { useLocation, useNavigate, NavigateFunction } from 'react-router-dom';
 import { searchBlog } from '../utils/BlogUtils';
-import { BlogInterface } from '../model';
+import { BlogInterface } from '../@types/model';
 
 
 const Blogs: FC = () => {
