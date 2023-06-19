@@ -22,7 +22,7 @@ function Blogs() {
           </h2>
         </div>
       }
-      <div className="flex flex-wrap m-5">{blog && blog.map((blog) => <Blog blog={blog} />)}</div>
+      <div data-testid="blog-item" className="flex flex-wrap m-5">{blog && blog.map((blog, index) => <Blog key={index} blog={blog} />)}</div>
     </div>
   );
 };

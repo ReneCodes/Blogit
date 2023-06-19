@@ -14,6 +14,7 @@ export const searchBlog = async (search, setBlog, navigate) => {
     const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search);
     setBlog(res.data);
   } catch (error) {
+    console.log(error);
     navigate('/server_down')
   }
 }
