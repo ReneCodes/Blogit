@@ -22,5 +22,10 @@ const mockData = [
 export default {
   get: (path) => ({
     data: mockData
-  })
+  }),
+
+  post: (info) =>{
+    console.log(info);
+  },
+
 };

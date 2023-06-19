@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
 import { act, render, screen } from '@testing-library/react';
 import Home from '../pages/Home';
 
@@ -26,18 +24,8 @@ const mockData = [
   }
 ];
 
-const server = setupServer(
-  rest.get('/blog', (req, res, ctx) => {
-    console.log('«HERE');
-    return res(ctx.json(mockData));
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
 describe('Home Component', () => {
+
   beforeEach(async () => {
     await act(async () => {
       render(
@@ -84,4 +72,6 @@ describe('Home Component', () => {
     });
 
   });
+
+
 });

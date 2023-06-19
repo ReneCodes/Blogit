@@ -30,7 +30,7 @@ function CreateChangeBlog({ callback, id, setFile}) {
   });
 
   return (
-    <form className="w-[70vw] " onSubmit={(e) => callback(e, title, content, category)}>
+    <form className="w-[70vw] " data-testid="form" onSubmit={(e) => callback(e, title, content, category)}>
       <div className="flex flex-col relative ml-36 w-[70vw] mb-5">
         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">
           Upload Image
@@ -62,7 +62,7 @@ function CreateChangeBlog({ callback, id, setFile}) {
           value={content}
           onChange={(newValue) => setContent(newValue)}
         />
-        <div className="p-1 flex flex-col text-xs w-[10vw] m-0">
+        <div data-testid="options_container" className="p-1 flex flex-col text-xs w-[10vw] m-0">
           <h1 className="text-center text-base">Category</h1>
           {allOptions}
         </div>

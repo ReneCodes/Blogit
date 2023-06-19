@@ -59,7 +59,6 @@ export const createBlog = async (newBlog, file, setRedirect, navigate) => {
     newBlog.image = filename;
     try {
       await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
-
       const response = await fetch(`${process.env.REACT_APP_SERVER}/create`, {
         method: 'POST',
         body: JSON.stringify(newBlog),
