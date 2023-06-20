@@ -10,11 +10,11 @@ import SingleBlog from './pages/SingleBlog';
 import Navbar from './Components/Navbar';
 import UserPage from './pages/UserPage';
 import ServerDown from './pages/ServerDown';
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import Edit from './pages/Edit';
 import Profile from './pages/Profile';
+import { AuthContext } from './context';
 
-export const AuthContext = createContext();
 function App() {
   const [reload, setReload] = useState(false);
   const [auth, setAuth] = useState(null);

@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import moment from 'moment';
-import { AuthContext } from '../App';
+import { AuthContext } from '../context';
 import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
 function SoloBlog() {

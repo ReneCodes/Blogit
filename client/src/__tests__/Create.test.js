@@ -24,7 +24,6 @@ describe('It should render the Create component', () => {
     form = screen.getByTestId('form');
   });
 
-
   it('Should show a submit button', () => {
     const submit_btn = form.querySelector('button');
     expect(submit_btn).toBeInTheDocument();

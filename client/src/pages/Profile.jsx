@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import avatar from '../images/avatar.jpeg';
-import { AuthContext } from '../App';
+import { AuthContext } from '../context';
 import { deleteUser, updateUserInformation } from '../utils/UserUtils';
 import { fetchAuthUser } from '../utils/AuthUtils';
 
@@ -49,7 +49,7 @@ function Profile() {
             Delete Account
           </button>
         </div>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form data-testid="form" className="flex flex-col" onSubmit={handleSubmit}>
           <label className="text-lg mt-5">Profile Picture</label>
           <div className="flex items-center mt-2 mb-2">
             <img
