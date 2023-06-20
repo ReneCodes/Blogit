@@ -1,16 +1,12 @@
 import {NavigateFunction} from 'react-router-dom';
 
-interface FetchAuth {
-	setAuth: React.Dispatch<React.SetStateAction<null>>;
-	setReload: React.Dispatch<React.SetStateAction<boolean>>;
-	navigate: NavigateFunction;
-}
-
-export const fetchAuthUser = async (
+type FetchAuthUserType = (
 	setAuth: React.Dispatch<React.SetStateAction<null>>,
 	setReload: React.Dispatch<React.SetStateAction<boolean>>,
 	navigate: NavigateFunction
-) => {
+) => Promise<void | {res: Response; data: any}>;
+
+export const fetchAuthUser: FetchAuthUserType = async (setAuth, setReload, navigate) => {
 	const token = localStorage.getItem('token');
 	if (token) {
 		try {
@@ -23,10 +19,9 @@ export const fetchAuthUser = async (
 			if (res.ok) {
 				setAuth(data);
 				setReload(true);
-			} else {
-				setAuth(null);
+				return;
 			}
-
+			setAuth(null);
 			return {res, data};
 		} catch (error) {
 			console.log(error);
@@ -36,18 +31,16 @@ export const fetchAuthUser = async (
 	}
 };
 
-export const logout = async (
-	setReload: React.Dispatch<React.SetStateAction<boolean>>,
-	navigate: NavigateFunction,
-	setAuth: React.Dispatch<React.SetStateAction<null>>
-) => {
+export const logout: FetchAuthUserType = async (setAuth, setReload, navigate) => {
 	try {
 		localStorage.removeItem('token');
 		setAuth(null);
 		setReload(true);
 		navigate('/login');
+		return;
 	} catch (error) {
 		navigate('/server_down');
+		return;
 	}
 };
 

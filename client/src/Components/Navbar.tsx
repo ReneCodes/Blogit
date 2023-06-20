@@ -23,7 +23,7 @@ const Navbar: FC = () => {
 	}, []);
 
 	function handleLogout() {
-		logout(setReload, navigate, setAuth);
+		logout(setAuth, setReload, navigate);
 	}
 
 	const capitalize = (name: string) => name.toUpperCase();
