@@ -27,8 +27,9 @@ function SoloBlog() {
     deleteBlog(blog, navigate);
   };
 
+
   return (
-    <div className="m-10">
+    <div className="m-10" data-testid="blog-solo">
       <div>
         <img src={folder + (blog.image ? blog.image : '')} className="w-full h-96 object-cover rounded-md" alt="profilepic" />
         <h1 className="text-3xl text-center">

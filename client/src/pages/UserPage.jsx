@@ -12,7 +12,6 @@ function UserPage() {
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
-    console.log(auth);
     getUserBlogs(auth, setBlog, navigate);
   }, []);
 

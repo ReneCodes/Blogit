@@ -25,7 +25,7 @@ export default {
   }),
 
   post: (info) =>{
-    console.log(info);
+    return info;
   },
 
 };

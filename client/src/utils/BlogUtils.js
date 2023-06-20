@@ -14,7 +14,6 @@ export const searchBlog = async (search, setBlog, navigate) => {
     const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search);
     setBlog(res.data);
   } catch (error) {
-    console.log(error);
     navigate('/server_down')
   }
 }
@@ -43,7 +42,7 @@ export const deleteBlog = async (blog, navigate) => {
 export const getUserBlog = async (path, setBlog, navigate) => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`);
-    setBlog(res.data);
+    Array.isArray(res.data) ? setBlog(res.data[0]) : setBlog(res.data);
   } catch (error) {
     navigate('/server_down')
   }
