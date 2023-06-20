@@ -13,7 +13,7 @@ const SoloBlog: FC = () => {
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
 	const {auth} = useContext<AuthContextType>(AuthContext);
-	const path = location.pathname.split('/')[2];
+	const path: string = location.pathname.split('/')[2];
 	const [blog, setBlog] = useState<BlogInterface>({} as BlogInterface);
 	const folder = `${process.env.REACT_APP_IMAGE_URL}/`;
 
