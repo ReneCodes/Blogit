@@ -12,6 +12,7 @@ function UserPage() {
   const [blog, setBlog] = useState([]);
 
   useEffect(() => {
+    console.log(auth);
     getUserBlogs(auth, setBlog, navigate);
   }, []);
 
@@ -26,7 +27,7 @@ function UserPage() {
         </div>
       }
       <div className=" mt-10 p-10 ml-50 flex justify-center items-center">
-        <div className="flex">{blog && blog.map((blog) => <Usersolo key={blog._id} blog={blog} />)}</div>
+        <div data-testid="blog-item" className="flex">{blog && blog.map((blog) => <Usersolo key={blog._id} blog={blog} />)}</div>
       </div>
     </div>
   );
