@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 
 import axios from 'axios';
@@ -6,6 +6,7 @@ import axios from 'axios';
 const Google = () => {
   const [user, setUser] = useState([]);
   const [profile, setProfile] = useState(null);
+  console.log(profile)
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => setUser(codeResponse),
