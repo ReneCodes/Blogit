@@ -1,3 +1,4 @@
+
 import React, {useState, useContext, useEffect, ChangeEvent} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPen} from '@fortawesome/free-solid-svg-icons';
@@ -55,6 +56,7 @@ const Profile: React.FC = () => {
 					<span className=" text-3xl mb-5 text-sky-600 ">Update Your Account</span>
 					<button
 						className="w-30  self-center rounded-lg p-2.5 cursor-pointer border-2 border-red-500 bg-inherit hover:bg-red-500 hover:text-white transition-all duration-200"
+
 						onClick={handleDelete}>
 						Delete Account
 					</button>

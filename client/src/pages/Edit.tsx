@@ -39,5 +39,6 @@ const Edit: React.FC = () => {
 			/>
 		</div>
 	);
+
 };
 export default Edit;

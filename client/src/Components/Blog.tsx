@@ -1,6 +1,8 @@
+
 import {FC} from 'react';
 import {BlogInterface} from '../@types/model';
 import {Link} from 'react-router-dom';
+
 
 import moment from 'moment';
 
@@ -55,6 +57,7 @@ const Blog: FC<Props> = ({blog}) => {
 			</div>
 		</article>
 	);
+
 };
 
 export default Blog;

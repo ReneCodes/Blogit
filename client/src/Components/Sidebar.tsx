@@ -1,3 +1,4 @@
+
 import {Link, useNavigate, NavigateFunction} from 'react-router-dom';
 import {useEffect, useState, FC} from 'react';
 import SidebarContent from './SidebarContent';
@@ -49,6 +50,7 @@ const Sidebar = () => {
 			</div>
 		</div>
 	);
+
 };
 
 export default Sidebar;

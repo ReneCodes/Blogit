@@ -1,3 +1,4 @@
+
 import {FC} from 'react';
 import {Link} from 'react-router-dom';
 import {BlogInterface} from '../@types/model';
@@ -43,6 +44,7 @@ const SidebarContent: FC<Props> = (props) => {
 			</div>
 		</>
 	);
+
 };
 
 export default SidebarContent;

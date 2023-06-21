@@ -70,6 +70,7 @@ const App: FC = () => {
 				</BrowserRouter>
 			</AuthContext.Provider>
 		</div>
+
 	);
 };
 

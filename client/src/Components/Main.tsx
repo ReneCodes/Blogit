@@ -8,6 +8,7 @@ const Main: FC = () => {
 			</h1>
 		</main>
 	);
+
 };
 
 export default Main;

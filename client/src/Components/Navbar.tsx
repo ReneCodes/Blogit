@@ -1,12 +1,10 @@
+
 import {useState, useContext, useEffect, FC} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
-
 import logo from '../images/logo.png';
 import avatar from '../images/avatar.jpeg';
 import {Link, useNavigate, useLocation, NavigateFunction} from 'react-router-dom';
-
 import {AuthContext} from '../App';
 import {logout, fetchAuthUser} from '../utils/AuthUtils';
 import {AuthContextType} from '../@types/auth';
@@ -64,6 +62,7 @@ const Navbar: FC = () => {
 								to="/create">
 								CREATE
 							</Link>
+
 						</li>
 					)}
 				</ul>
@@ -138,6 +137,7 @@ const Navbar: FC = () => {
 						/>
 					</label>
 				</div>
+
 			</div>
 		</nav>
 	);

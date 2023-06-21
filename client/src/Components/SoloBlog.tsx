@@ -64,6 +64,7 @@ const SoloBlog: FC = () => {
 				<div
 					className="mt-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0"
 					dangerouslySetInnerHTML={{__html: blog.content}}></div>
+
 			</div>
 		</div>
 	);

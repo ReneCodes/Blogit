@@ -32,6 +32,7 @@ export const searchBlog = async (
 		await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search).then(({data}) => {
 			setBlog(data);
 		});
+
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -125,6 +126,7 @@ export const createBlog = async (
 		// upload and store image first
 		await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data).then(async () => {
 			// then create new blog post
+
 			await axios
 				.post(`${process.env.REACT_APP_SERVER}/create`, newBlog, {
 					headers: {'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true},
@@ -138,9 +140,11 @@ export const createBlog = async (
 		} else {
 			navigate('/server_down');
 			return 'An unexpected error occurred';
+
 		}
 	}
 };
+
 
 export const updateBlog = async (
 	file: File,

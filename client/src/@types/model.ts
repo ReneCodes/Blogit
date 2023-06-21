@@ -14,3 +14,4 @@ export type User = {
 	password: string;
 	image?: string;
 };
+

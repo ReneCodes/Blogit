@@ -1,4 +1,6 @@
+
 import React, {useEffect, useState, FormEvent, FC, ChangeEvent} from 'react';
+
 import ReactQuill from 'react-quill';
 import {getSpecificBlog} from '../utils/BlogUtils';
 
@@ -6,6 +8,7 @@ interface Props {
 	callback: (e: FormEvent, title: string, content: string, category: string) => void;
 	id?: string;
 	setFile: React.Dispatch<React.SetStateAction<File>>;
+
 }
 
 const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
@@ -22,6 +25,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 			getSpecificBlog(setTitle, setContent, setCategory, id);
 		}
 	}, []);
+
 
 	const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
 		const getFiles = e.target.files;
@@ -74,11 +78,11 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 						Upload Image
 						<input
 							className="inline my-2 w-full text-sm text-slate-500
-						file:mr-4 file:py-2 file:px-4
-						file:rounded-lg file:border-0
-						file:text-sm file:font-semibold
-						file:bg-sky-50 file:text-sky-600
-						hover:file:bg-sky-100"
+						  file:mr-4 file:py-2 file:px-4
+						  file:rounded-lg file:border-0
+					  	file:text-sm file:font-semibold
+					  	file:bg-sky-50 file:text-sky-600
+					  	hover:file:bg-sky-100"
 							id="file_input"
 							type="file"
 							onChange={(e) => handleFileInput(e)}

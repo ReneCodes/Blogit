@@ -1,5 +1,4 @@
 import Blog from './Blog';
-
 import {useEffect, useState, FC} from 'react';
 import {useLocation, useNavigate, NavigateFunction} from 'react-router-dom';
 import {searchBlog} from '../utils/BlogUtils';
@@ -40,6 +39,7 @@ const Blogs: FC = () => {
 			</div>
 		</div>
 	);
+
 };
 
 export default Blogs;
