@@ -9,8 +9,9 @@ export const getUserBlogs = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`);
-		setBlog(res.data);
+		await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`).then(({data}) => {
+			setBlog(data);
+		});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -28,8 +29,9 @@ export const searchBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search);
-		setBlog(res.data);
+		await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search).then(({data}) => {
+			setBlog(data);
+		});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -46,8 +48,9 @@ export const getBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog`);
-		setBlog(res.data.slice(6, -2));
+		await axios.get(`${process.env.REACT_APP_SERVER}/blog`).then(({data}) => {
+			setBlog(data.slice(3, -1));
+		});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -61,11 +64,14 @@ export const getBlog = async (
 
 export const deleteBlog = async (blog: BlogInterface, navigate: NavigateFunction) => {
 	try {
-		await axios.delete(`${process.env.REACT_APP_SERVER}/blog/${blog._id}`, {
-			headers: {'Content-Type': 'application/json', token: localStorage.getItem('token')},
-			data: {},
-		});
-		navigate('/');
+		await axios
+			.delete(`${process.env.REACT_APP_SERVER}/blog/${blog._id}`, {
+				headers: {'Content-Type': 'application/json', token: localStorage.getItem('token')},
+				data: {},
+			})
+			.then(() => {
+				navigate('/');
+			});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -83,8 +89,9 @@ export const getUserBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		const res = await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`);
-		setBlog(res.data);
+		await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`).then(({data}) => {
+			setBlog(data);
+		});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -105,45 +112,44 @@ type NewBlogType = {
 
 export const createBlog = async (
 	newBlog: NewBlogType,
-	file: File | undefined,
+	file: File,
 	setRedirect: React.Dispatch<React.SetStateAction<boolean>>,
 	navigate: NavigateFunction
 ) => {
-	if (file) {
-		const data = new FormData();
-		const filename = Date.now() + file.name;
-		data.append('name', filename);
-		data.append('file', file);
-		newBlog.image = filename;
-		try {
-			await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data);
-
+	const data = new FormData();
+	const filename = Date.now() + file.name;
+	data.append('name', filename);
+	data.append('file', file);
+	newBlog.image = filename;
+	try {
+		// upload and store image first
+		await axios.post(`${process.env.REACT_APP_SERVER}/upload`, data).then(async () => {
+			// then create new blog post
 			await axios
 				.post(`${process.env.REACT_APP_SERVER}/create`, newBlog, {
 					headers: {'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true},
 				})
 				.then(() => setRedirect(true));
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				navigate('/server_down');
-				return error.message;
-			} else {
-				navigate('/server_down');
-				return 'An unexpected error occurred';
-			}
+		});
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			navigate('/server_down');
+			return error.message;
+		} else {
+			navigate('/server_down');
+			return 'An unexpected error occurred';
 		}
 	}
 };
 
-type UpdateResponse = {};
-
 export const updateBlog = async (
-	file: File | undefined,
+	file: File,
 	newBlog: NewBlogType,
 	id: string | undefined,
 	setRedirect: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-	if (file) {
+	// update cover image if needed
+	if (file.name) {
 		const formData = new FormData();
 		const filename = Date.now() + file.name;
 		formData.append('name', filename);
@@ -151,7 +157,7 @@ export const updateBlog = async (
 		newBlog.image = filename;
 
 		try {
-			await axios.post(`${process.env.REACT_APP_SERVER}/upload`, formData).then((response) => response);
+			await axios.post(`${process.env.REACT_APP_SERVER}/upload`, formData);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
 				return error.message;
@@ -160,7 +166,7 @@ export const updateBlog = async (
 			}
 		}
 	}
-
+	// update blog posts
 	try {
 		axios
 			.put(`${process.env.REACT_APP_SERVER}/edit/${id}`, newBlog, {
