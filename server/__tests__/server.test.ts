@@ -4,6 +4,7 @@ dotenv.config();
 import mongoose from "../models/index";
 import { app } from "../server";
 import User from "../models/User";
+import Blog from "../models/Blog";
 import jwt from "jsonwebtoken";
 
 beforeAll(mongoose.disconnect); // Golden line !!
@@ -15,6 +16,7 @@ beforeEach(async () => {
 afterEach(async () => {
   if (mongoose.connection.readyState !== 0) {
     await User.deleteMany({});
+    await Blog.deleteMany({});
     await mongoose.connection.close();
   }
 });
@@ -142,4 +144,92 @@ describe("GET /auth", () => {
     expect(response.body.username).toBe(newUser.username);
     expect(response.body.email).toBe(newUser.email);
   });
+});
+
+describe("DELETE /profile/:id", () => {
+  it("should delete the user profile for a valid user ID", async () => {
+    // Create a test user
+    const newUser = await User.create({
+      username: "testuser",
+      email: "test@example.com",
+      password: "password123",
+    });
+
+    const secret = process.env.SECRET || "defaultSecretKey";
+    const token = jwt.sign({ id: newUser._id }, secret);
+
+    // delete request
+    const response = await request
+      .delete(`/profile/${newUser._id}`)
+      .set("token", token);
+
+    expect(response.status).toBe(200);
+    expect(response.body.msg).toBe("user deleted");
+    expect(response.body.user).toHaveProperty("_id", String(newUser._id));
+    expect(response.body.user).toHaveProperty("username", newUser.username);
+    expect(response.body.user).toHaveProperty("email", newUser.email);
+
+    // Check if the user is deleted from the database
+    const deletedUser = await User.findById(newUser._id);
+    expect(deletedUser).toBeNull();
+  });
+  it("should return error when user profile doesn't exist", async () => {
+    const invalidUserId = "invalidUserId";
+    const secret = process.env.SECRET || "defaultSecretKey";
+    const token = jwt.sign({ id: invalidUserId }, secret);
+
+    // Making delete request
+    const response = await request
+      .delete(`/profile/${invalidUserId}`)
+      .set("token", token);
+
+    // Check the response
+    expect(response.status).toBe(401);
+    expect(response).toThrowError;
+  });
+});
+
+describe("GET /blog => search by queri or params", () => {});
+it("should get all blogs from a specific user", async () => {
+  const newUser = await User.create({
+    username: "testuser",
+    email: "test@example.com",
+    password: "password123",
+  });
+
+  const testBlog = await Blog.create({
+    title: "Test Blog",
+    content: "This is a test blog.",
+    author: newUser._id, // Replace with a valid author ID for testing
+    category: "test",
+    image: "randomImage",
+  });
+
+  const response = await request.get("/blog").query({ user: "testuser" });
+
+  console.log("In User Test", response.body);
+  expect(response.status).toEqual(200);
+  expect(response.body).toBeDefined();
+});
+
+it("should get all blogs in a specific category", async () => {
+  const newUser = await User.create({
+    username: "testuser",
+    email: "test@example.com",
+    password: "password123",
+  });
+
+  const testBlog = await Blog.create({
+    title: "Test Blog",
+    content: "This is a test blog.",
+    author: newUser._id, // Replace with a valid author ID for testing
+    category: "test",
+    image: "randomImage",
+  });
+
+  const response = await request.get("/blog").query({ cat: "test" });
+
+  console.log("In Cat test", response.body);
+  expect(response.status).toEqual(200);
+  expect(response.body).toBeDefined();
 });
