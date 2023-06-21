@@ -1,18 +1,18 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useEffect, useState, useContext, FC} from 'react';
-import {faUserPen, faTrashCan} from '@fortawesome/free-solid-svg-icons';
-import {useLocation, useNavigate, Link, NavigateFunction} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState, useContext, FC } from 'react';
+import { faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { useLocation, useNavigate, Link, NavigateFunction } from 'react-router-dom';
 import moment from 'moment';
-import {AuthContext} from '../App';
-import {deleteBlog, getUserBlog} from '../utils/BlogUtils';
+import { AuthContext } from '../App';
+import { deleteBlog, getUserBlog } from '../utils/BlogUtils';
 
-import {BlogInterface} from '../@types/model';
-import {AuthContextType} from '../@types/auth';
+import { BlogInterface } from '../@types/model';
+import { AuthContextType } from '../@types/auth';
 
 const SoloBlog: FC = () => {
 	const navigate: NavigateFunction = useNavigate();
 	const location = useLocation();
-	const {auth} = useContext<AuthContextType>(AuthContext);
+	const { auth } = useContext<AuthContextType>(AuthContext);
 	const path: string = location.pathname.split('/')[2];
 	const [blog, setBlog] = useState<BlogInterface>({} as BlogInterface);
 	const folder = `${process.env.REACT_APP_IMAGE_URL}/`;
@@ -30,7 +30,7 @@ const SoloBlog: FC = () => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center my-10 px-5 w-4/5 mx-auto">
+		<div className="flex flex-col justify-center my-10 px-5 w-4/5 mx-auto" data-testid="blog-solo">
 			<div className="flex justify-center w-4/5 mx-auto">
 				<img
 					src={folder + (blog.image ? blog.image : '')}
@@ -62,8 +62,9 @@ const SoloBlog: FC = () => {
 					<p>{moment(blog.createdAt).fromNow()}</p>
 				</div>
 				<div
+					data-testid="description"
 					className="mt-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0"
-					dangerouslySetInnerHTML={{__html: blog.content}}></div>
+					dangerouslySetInnerHTML={{ __html: blog.content }}></div>
 
 			</div>
 		</div>

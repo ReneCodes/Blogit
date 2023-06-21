@@ -1,8 +1,8 @@
 
-import {Link} from 'react-router-dom';
-import {FC} from 'react';
+import { Link } from 'react-router-dom';
+import { FC } from 'react';
 import moment from 'moment';
-import {BlogInterface} from '../@types/model';
+import { BlogInterface } from '../@types/model';
 
 interface Props {
 	key: string;
@@ -11,14 +11,15 @@ interface Props {
 
 const Usersolo: FC<Props> = (props) => {
 	const folder = process.env.REACT_APP_IMAGE_URL;
-	const {title, _id, content, image, createdAt, author, category} = props.blog;
+	const { title, _id, content, image, createdAt, author, category } = props.blog;
 
 	const capitalize = (name: string) => {
 		return name?.toUpperCase();
 	};
 
 	return (
-		<article className="w-96 mb-10 mx-6">
+		<article className="w-96 mb-10 mx-6" data-testid="blog-item"
+		>
 			<div>
 				<img
 					src={folder + '/' + image}
@@ -48,7 +49,7 @@ const Usersolo: FC<Props> = (props) => {
 				</div>
 				<div
 					className="blogDesc"
-					dangerouslySetInnerHTML={{__html: content}}
+					dangerouslySetInnerHTML={{ __html: content }}
 				/>
 			</div>
 		</article>

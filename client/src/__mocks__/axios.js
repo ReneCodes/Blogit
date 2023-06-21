@@ -28,4 +28,8 @@ export default {
     return info;
   },
 
+  isAxiosError: (err)=>{
+    return err;
+  }
+
 };

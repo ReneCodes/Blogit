@@ -38,7 +38,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 		const options = ['Art', 'Science', 'Technology', 'Music', 'Sports', 'Travel', 'Food'];
 
 		return (
-			<div className="flex flex-wrap w-full gap-2 my-2">
+			<div className="flex flex-wrap w-full gap-2 my-2" data-testid="options_container">
 				{options.map((item) => {
 					return (
 						<div
@@ -69,7 +69,9 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 	return (
 		<form
 			className="relative flex flex-col w-[600px] h-fit m-auto justify-center align-middle"
-			onSubmit={(e) => callback(e, title, content, category)}>
+			onSubmit={(e) => callback(e, title, content, category)}
+			data-testid="form"
+			>
 			<div className="flex flex-col my-5">
 				<div className="flex justify-between">
 					<label

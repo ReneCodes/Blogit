@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {NavigateFunction} from 'react-router-dom';
-import {AuthType} from '../@types/auth';
-import {BlogInterface} from '../@types/model';
+import { NavigateFunction } from 'react-router-dom';
+import { AuthType } from '../@types/auth';
+import { BlogInterface } from '../@types/model';
 
 export const getUserBlogs = async (
 	auth: null | AuthType,
@@ -9,9 +9,8 @@ export const getUserBlogs = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`).then(({data}) => {
-			setBlog(data);
-		});
+		const { data } = await axios.get(`${process.env.REACT_APP_SERVER}/blog?user=${auth?.username}`)
+		setBlog(data);
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -29,9 +28,8 @@ export const searchBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search).then(({data}) => {
-			setBlog(data);
-		});
+		const { data } = await axios.get(`${process.env.REACT_APP_SERVER}/blog` + search)
+		setBlog(data);
 
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
@@ -49,9 +47,8 @@ export const getBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		await axios.get(`${process.env.REACT_APP_SERVER}/blog`).then(({data}) => {
-			setBlog(data.slice(3, -1));
-		});
+		const { data } = await axios.get(`${process.env.REACT_APP_SERVER}/blog`);
+		setBlog(data.slice(3, -1));
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -67,7 +64,7 @@ export const deleteBlog = async (blog: BlogInterface, navigate: NavigateFunction
 	try {
 		await axios
 			.delete(`${process.env.REACT_APP_SERVER}/blog/${blog._id}`, {
-				headers: {'Content-Type': 'application/json', token: localStorage.getItem('token')},
+				headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
 				data: {},
 			})
 			.then(() => {
@@ -90,9 +87,8 @@ export const getUserBlog = async (
 	navigate: NavigateFunction
 ) => {
 	try {
-		await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`).then(({data}) => {
-			setBlog(data);
-		});
+		const { data } = await axios.get(`${process.env.REACT_APP_SERVER}/blog/${path}`);
+		Array.isArray(data) ? setBlog(data[0]) : setBlog(data);
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			navigate('/server_down');
@@ -129,7 +125,7 @@ export const createBlog = async (
 
 			await axios
 				.post(`${process.env.REACT_APP_SERVER}/create`, newBlog, {
-					headers: {'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true},
+					headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true },
 				})
 				.then(() => setRedirect(true));
 		});
@@ -174,7 +170,7 @@ export const updateBlog = async (
 	try {
 		axios
 			.put(`${process.env.REACT_APP_SERVER}/edit/${id}`, newBlog, {
-				headers: {'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true},
+				headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token'), withCredentials: true },
 			})
 			.then(() => {
 				setRedirect(true);
@@ -195,7 +191,7 @@ export const getSpecificBlog = async (
 	id: string
 ) => {
 	try {
-		await axios.get(`${process.env.REACT_APP_SERVER}/blog/${id}`).then(({data}) => {
+		await axios.get(`${process.env.REACT_APP_SERVER}/blog/${id}`).then(({ data }) => {
 			setTitle(data.title);
 			setContent(data.content);
 			setCategory(data.category);

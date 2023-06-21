@@ -1,8 +1,7 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import SingleBlog from '../pages/SingleBlog';
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 
 const auth = {
   _id: "649067f0d89a4897a9c9d80f",
@@ -33,13 +32,13 @@ describe('It should render the SoloBlog component', () => {
 
     const blog = screen.getByTestId('blog-solo');
     const h1 = blog.querySelector('h1');
-    const authoredBy = blog.querySelectorAll('span');
-    const description = blog.getElementsByClassName('first-letter:ml-5')
+    const authoredBy = blog.querySelectorAll('p');
+    const description = screen.getByTestId('description')
 
     expect(h1.textContent).toBe('Test');
-    expect(authoredBy[0].textContent).toBe('Authored by:TEST');
-    expect(authoredBy[1].textContent).toBe('a day ago');
-    expect(description[description.length -1].textContent).toBe('123');
+    expect(authoredBy[0].textContent).toBe('Authored by: TEST');
+    expect(authoredBy[1].textContent).toBe('2 days ago');
+    expect(description.textContent).toBe('123');
   });
 
 });
