@@ -7,12 +7,12 @@ import CreateChangeBlog from '../Components/ChangeCreateBlog';
 const Create: FC = () => {
 	const [redirect, setRedirect] = useState<boolean>(false);
 	const navigate: NavigateFunction = useNavigate();
-	const [file, setFile] = useState<File>();
+	const [coverImage, setCoverImage] = useState<File>({} as File);
 
 	const handleSubmit = (e: FormEvent, title: string, content: string, category: string) => {
 		e.preventDefault();
 		const newBlog = {title, content, category};
-		createBlog(newBlog, file, setRedirect, navigate);
+		createBlog(newBlog, coverImage, setRedirect, navigate);
 	};
 
 	if (redirect) {
@@ -20,17 +20,17 @@ const Create: FC = () => {
 	}
 
 	return (
-		<div className="p-12 pr-16">
-			{file && (
+		<div className="flex flex-col align-middle p-10 ">
+			{coverImage.name && (
 				<img
-					src={URL.createObjectURL(file)}
-					className="ml-36 h-64 w-[70vw] object-cover rounded-md mb-5"
-					alt="profilepic"
+					src={URL.createObjectURL(coverImage)}
+					className=" mx-auto h-64 w-[600px] object-cover rounded-md mb-5"
+					alt="Blogpost cover image"
 				/>
 			)}
 			<CreateChangeBlog
 				callback={handleSubmit}
-				setFile={setFile}
+				setFile={setCoverImage}
 			/>
 		</div>
 	);
