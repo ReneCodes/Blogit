@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPen } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import avatar from '../images/avatar.jpeg';
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 import { deleteUser, updateUserInformation } from '../utils/UserUtils';
 import { fetchAuthUser } from '../utils/AuthUtils';
 

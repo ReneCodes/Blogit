@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 
 import Usersolo from '../Components/Usersolo';
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 import { getUserBlogs } from "../utils/BlogUtils.js";
 import { useNavigate } from 'react-router-dom';
 

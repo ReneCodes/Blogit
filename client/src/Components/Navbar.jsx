@@ -7,7 +7,7 @@ import logo from '../images/logo.png';
 import avatar from '../images/avatar.jpeg';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 import { logout, fetchAuthUser } from '../utils/AuthUtils';
 
 function Navbar() {
