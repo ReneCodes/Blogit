@@ -12,7 +12,7 @@ import {AuthContextType} from '../@types/auth';
 
 const Profile: React.FC = () => {
 	const folder = process.env.REACT_APP_IMAGE_URL;
-	const [file, setFile] = useState<File | undefined>(undefined);
+	const [file, setFile] = useState<File>({} as File);
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -41,6 +41,13 @@ const Profile: React.FC = () => {
 		deleteUser(auth, navigate);
 	};
 
+	function handleFileInput(e: React.ChangeEvent<HTMLInputElement>) {
+		const files = e.target.files;
+		if (files) {
+			setFile(files[0]);
+		}
+	}
+
 	return (
 		<div className="mt-16 relative flex justify-center align-middle">
 			<div className="relative w-6/12 p-5">
@@ -58,14 +65,11 @@ const Profile: React.FC = () => {
 					<label className="text-lg mt-5">Profile Picture</label>
 					<div className="flex items-center mt-2 mb-2">
 						<img
-							src={file ? URL.createObjectURL(file) : auth?.image ? folder + '/' + auth?.image : avatar}
+							src={file.name ? URL.createObjectURL(file) : auth?.image ? folder + '/' + auth?.image : avatar}
 							className=" w-16 h-16 rounded-2xl object-cover"
 							alt=""
 						/>
-						<label
-							className="text-lg mt-5"
-							// htmlFor="fileInput"
-						>
+						<label className="text-lg mt-5">
 							<FontAwesomeIcon
 								icon={faUserPen}
 								className="cursor-pointer  ml-3"
@@ -73,9 +77,8 @@ const Profile: React.FC = () => {
 							<input
 								className="mt-2 mb-2 h-5 border-none border-b-gray-500"
 								type="file"
-								// id="fileInput"
 								style={{display: 'none'}}
-								onChange={(e) => setFile(e.target.files?.[0])}
+								onChange={(e) => handleFileInput(e)}
 							/>
 						</label>
 					</div>

@@ -29,7 +29,7 @@ const Blogs: FC = () => {
 					</h2>
 				</div>
 			)}
-			<div className="flex flex-wrap m-5">
+			<div className="flex flex-wrap p-5">
 				{blogs &&
 					blogs.map((blog: BlogInterface) => (
 						<Blog
