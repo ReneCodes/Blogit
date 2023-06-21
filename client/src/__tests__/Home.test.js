@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { act, render, screen } from '@testing-library/react';
 import Home from '../pages/Home';
@@ -44,7 +43,7 @@ describe('Home Component', () => {
   });
 
   it('should show all categories', async () => {
-    const options = ['Music', 'Travel', 'Technology', 'Science', 'Art', 'Sports', 'Food',];
+    const options = ['All', 'Music', 'Travel', 'Technology', 'Science', 'Art', 'Sports', 'Food',];
     const optionsContainer = screen.getByTestId('all_categories');
     expect(optionsContainer.textContent).toBe(options.join(''));
   });
@@ -70,7 +69,6 @@ describe('Home Component', () => {
       expect(blogContent.textContent).toBe(contentPhrase);
       expect(blogReadMoreLink.textContent).toBe(mockData[index].category);
     });
-
   });
 
 

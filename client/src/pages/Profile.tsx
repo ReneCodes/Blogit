@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
 
 	return (
 		<div className="mt-16 relative flex justify-center align-middle">
-			<div className="relative w-6/12 p-5">
+			<div className="relative w-6/12 p-5" data-testid="container">
 				<div className="flex justify-between ">
 					<span className=" text-3xl mb-5 text-sky-600 ">Update Your Account</span>
 					<button
@@ -61,9 +61,7 @@ const Profile: React.FC = () => {
 						Delete Account
 					</button>
 				</div>
-				<form
-					className="flex flex-col"
-					onSubmit={handleSubmit}>
+				<form className="flex flex-col"onSubmit={handleSubmit} data-testid="form">
 					<label className="text-lg mt-5">Profile Picture</label>
 					<div className="flex items-center mt-2 mb-2">
 						<img

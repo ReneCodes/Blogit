@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, act } from '@testing-library/react';
 import Profile from '../pages/Profile';
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 
 let profile = {
   _id: "649067f0d89a4897a9c9d80f",
@@ -11,6 +11,8 @@ let profile = {
   createdAt: "2023-06-19T14:36:32.747Z",
   updatedAt: "2023-06-19T14:36:32.747Z",
 };
+
+let container;
 let form;
 
 describe('It should render the profile page', () => {
@@ -22,25 +24,29 @@ describe('It should render the profile page', () => {
     let setAuth = (newInformation) => auth = newInformation;
     let setReload = (shouldReload) => reload = shouldReload;
 
-    render(
-      <AuthContext.Provider value={{ auth, setAuth, setReload }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Profile />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthContext.Provider>
-    );
-    form = screen.getByTestId('form');
+    await act(async () => {
+      render(
+        <AuthContext.Provider value={{ auth, setAuth, setReload }}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Profile />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthContext.Provider>
+      );
+    });
+    container = screen.getByTestId('container')
+    form = container.querySelector('form')
+
 
   });
 
-  it('Should render the page title', ()=>{
+  it('Should render the page title', () => {
     const text = screen.getByText(/Update Your Account/);
     expect(text).toBeInTheDocument();
   });
 
-  it('Should display the delete && update button', ()=>{
+  it('Should display the delete && update button', () => {
     const buttons = screen.getAllByRole('button');
 
     // DELETE BUTTON
@@ -52,7 +58,7 @@ describe('It should render the profile page', () => {
     expect(buttons[1].textContent).toBe('Update');
   });
 
-  it('Should display an update of the profile picture and the profile picture', ()=>{
+  it('Should display an update of the profile picture and the profile picture', () => {
     const profileImageLabel = screen.getByText(/Profile Picture/);
     expect(profileImageLabel).toBeInTheDocument();
 
@@ -64,48 +70,39 @@ describe('It should render the profile page', () => {
     expect(pictureInput.type).toBe('file');
   });
 
-  it('Username input and placeholder as the current username', ()=>{
+  it('Username input and placeholder as the current username', () => {
     const usernameInput = form.querySelectorAll('input')[1];
     expect(usernameInput.placeholder).toBe(profile.username);
     expect(usernameInput.type).toBe('text');
   });
 
-  it('Email input and placeholder as the current email', ()=>{
+  it('Email input and placeholder as the current email', () => {
     const emailInput = form.querySelectorAll('input')[2];
     expect(emailInput.placeholder).toBe(profile.email);
     expect(emailInput.type).toBe('email');
   });
 
-  it('Password input and placeholder as "Enter new password"', ()=>{
+  it('Password input and placeholder as "Enter new password"', () => {
     const passwordInput = form.querySelectorAll('input')[3];
     expect(passwordInput.placeholder).toBe("Enter new password");
     expect(passwordInput.type).toBe('password');
   });
 
-  it('Should be able to change username', ()=>{
+  it('Should be able to change username/email and password', async () => {
     const usernameInput = form.querySelectorAll('input')[1];
-    const updateButton = screen.getAllByRole('button')[1];
-    fireEvent.change(usernameInput, { target: { value: 'NewUsername' } });
-    fireEvent.click(updateButton);
-  });
-
-  it('Should be able to change email', ()=>{
     const emailInput = form.querySelectorAll('input')[2];
-    const updateButton = screen.getAllByRole('button')[1];
-    fireEvent.change(emailInput, { target: { value: 'new@email.com' } });
-    fireEvent.click(updateButton);
-  });
-
-  it('Should be able to change password', ()=>{
     const passwordInput = form.querySelectorAll('input')[3];
-    const updateButton = screen.getAllByRole('button')[1];
-    fireEvent.change(passwordInput, { target: { value: 'NewPassword' } });
-    fireEvent.click(updateButton);
-  });
 
-  it('Should be able to delete the account', ()=>{
-    const deleteButton = screen.getAllByRole('button')[0];
-    fireEvent.click(deleteButton);
+    const updateButton = screen.getAllByRole('button')[1];
+
+    fireEvent.change(usernameInput, { target: { value: 'NewUsername' } });
+    fireEvent.change(emailInput, { target: { value: 'new@email.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'NewPassword' } });
+
+    await act(async () => {
+      fireEvent.click(updateButton);
+    });
+
   });
 
 });

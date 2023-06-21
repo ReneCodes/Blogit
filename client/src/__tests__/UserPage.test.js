@@ -1,8 +1,7 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { render, screen, act } from '@testing-library/react';
 import UserPage from '../pages/UserPage';
-import { AuthContext } from '../context';
+import { AuthContext } from '../App';
 
 const auth = {
   _id: "649067f0d89a4897a9c9d80f",

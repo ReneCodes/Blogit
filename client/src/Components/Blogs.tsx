@@ -5,7 +5,7 @@ import {searchBlog} from '../utils/BlogUtils';
 import {BlogInterface} from '../@types/model';
 
 const Blogs: FC = () => {
-	let navigate: NavigateFunction = useNavigate();
+	const navigate: NavigateFunction = useNavigate();
 	const [blogs, setBlogs] = useState<BlogInterface[]>([]);
 	const {search} = useLocation();
 
@@ -14,7 +14,7 @@ const Blogs: FC = () => {
 	}, [search]);
 
 	return (
-		<div style={{flex: 9}}>
+		<section style={{flex: 9}}>
 			{blogs.length === 0 && (
 				<div className="flex flex-col m-5 p-5 align-center justify-center w-1/2">
 					<h2 className="m-auto font-semibold text-2xl	cursor-pointer ">
@@ -28,7 +28,7 @@ const Blogs: FC = () => {
 					</h2>
 				</div>
 			)}
-			<div className="flex flex-wrap p-5">
+			<div className="flex flex-wrap p-5" data-testid="blog-item">
 				{blogs &&
 					blogs.map((blog: BlogInterface) => (
 						<Blog
@@ -37,7 +37,7 @@ const Blogs: FC = () => {
 						/>
 					))}
 			</div>
-		</div>
+		</section>
 	);
 
 };
