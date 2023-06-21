@@ -1,11 +1,11 @@
-import React, {useEffect, useState, FormEvent, FC} from 'react';
+import React, {useEffect, useState, FormEvent, FC, ChangeEvent} from 'react';
 import ReactQuill from 'react-quill';
 import {getSpecificBlog} from '../utils/BlogUtils';
 
 interface Props {
 	callback: (e: FormEvent, title: string, content: string, category: string) => void;
-	id?: string | undefined;
-	setFile: React.Dispatch<React.SetStateAction<File | undefined>>;
+	id?: string;
+	setFile: React.Dispatch<React.SetStateAction<File>>;
 }
 
 const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
@@ -13,7 +13,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 	const [title, setTitle] = useState<string>('');
 	const [content, setContent] = useState<string>('');
 
-	const onOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const onOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setCategory(e.target.value);
 	};
 
@@ -22,6 +22,13 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 			getSpecificBlog(setTitle, setContent, setCategory, id);
 		}
 	}, []);
+
+	const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
+		const getFiles = e.target.files;
+		if (getFiles?.length) {
+			setFile(getFiles[0]);
+		}
+	};
 
 	const CategoryOptions = () => {
 		const options = ['Art', 'Science', 'Technology', 'Music', 'Sports', 'Travel', 'Food'];
@@ -34,6 +41,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 							key={item}
 							className="flex align-middle justify-center rounded-lg border my-1 px-1">
 							<input
+								required
 								id={item}
 								className="accent-sky-600 peer"
 								type="radio"
@@ -66,14 +74,14 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 						Upload Image
 						<input
 							className="inline my-2 w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-lg file:border-0
-              file:text-sm file:font-semibold
-              file:bg-sky-50 file:text-sky-600
-              hover:file:bg-sky-100"
+						file:mr-4 file:py-2 file:px-4
+						file:rounded-lg file:border-0
+						file:text-sm file:font-semibold
+						file:bg-sky-50 file:text-sky-600
+						hover:file:bg-sky-100"
 							id="file_input"
 							type="file"
-							onChange={(e) => setFile(e.target.files?.[0])}
+							onChange={(e) => handleFileInput(e)}
 						/>
 					</label>
 					<button
@@ -85,6 +93,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 				<label className="my-2 font-medium flex flex-col">
 					Title
 					<input
+						required
 						type="title"
 						placeholder={'Title'}
 						autoFocus={true}
@@ -103,7 +112,7 @@ const CreateChangeBlog: FC<Props> = ({callback, id, setFile}) => {
 				</div>
 				<ReactQuill
 					placeholder="Create your blog.."
-					className=" w-full h-60 outline-none focus-within:text-sky-700"
+					className=" w-full h-60 outline-none focus-within:text-sky-600"
 					value={content}
 					onChange={(newValue) => setContent(newValue)}
 				/>
