@@ -24,7 +24,7 @@ const Blog: FC<Props> = ({blog}) => {
 				<img
 					src={folder + '/' + image}
 					className="w-full h-64 object-cover rounded-md"
-					alt="profilepic"
+					alt=""
 				/>
 			</div>
 			<div className="p-4">

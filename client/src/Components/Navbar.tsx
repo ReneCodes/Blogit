@@ -4,17 +4,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import logo from '../images/logo.png';
 import avatar from '../images/avatar.jpeg';
-import {Link, useNavigate, useLocation, NavigateFunction} from 'react-router-dom';
+import {Link, useNavigate, NavigateFunction} from 'react-router-dom';
 import {AuthContext} from '../App';
 import {logout, fetchAuthUser} from '../utils/AuthUtils';
 import {AuthContextType} from '../@types/auth';
 
 const Navbar: FC = () => {
 	const [navLink, setNavLink] = useState<string>('/');
-	let navigate: NavigateFunction = useNavigate();
+	const navigate: NavigateFunction = useNavigate();
 	const folder = process.env.REACT_APP_IMAGE_URL;
 	const {auth, setAuth, setReload} = useContext<AuthContextType>(AuthContext);
-	const {pathname} = useLocation();
 
 	useEffect(() => {
 		fetchAuthUser(setAuth, setReload, navigate).catch((err) => {
@@ -26,8 +25,6 @@ const Navbar: FC = () => {
 		logout(setAuth, setReload, navigate);
 		setNavLink('/login');
 	}
-
-	const capitalize = (name: string) => name.toUpperCase();
 
 	return (
 		<nav className="w-full h-12 my-3 bg-white sticky top-0 flex items-center font-lora">
@@ -77,7 +74,7 @@ const Navbar: FC = () => {
 								<Link
 									className={`cursor-pointer text-lg nav-link ${navLink === '/userpage' && 'current'}`}
 									onClick={() => setNavLink('/userpage')}
-									to="/userpage">{`HI ${capitalize(auth.username)}`}</Link>
+									to="/userpage">{`HI ${auth.username.toUpperCase()}`}</Link>
 							</li>
 
 							<li>
