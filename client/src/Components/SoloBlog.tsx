@@ -30,40 +30,41 @@ const SoloBlog: FC = () => {
 	};
 
 	return (
-		<div className="m-10">
-			<div>
+		<div className="flex flex-col justify-center my-10 px-5 w-4/5 mx-auto">
+			<div className="flex justify-center w-4/5 mx-auto">
 				<img
 					src={folder + (blog.image ? blog.image : '')}
-					className="w-full h-96 object-cover rounded-md"
-					alt="profilepic"
+					className="h-96 w-full object-cover rounded-md"
+					alt="Blogpost cover image"
 				/>
-				<h1 className="text-3xl text-center">
-					{blog.title}
-					{auth && blog && blog.author && auth?.username === blog.author?.username && (
-						<div className="float-right text-base">
-							<Link to={`/edit/${blog._id}`}>
-								<FontAwesomeIcon
-									icon={faUserPen}
-									className="cursor-pointer  ml-3"
-								/>
-							</Link>
+			</div>
+			<div className="flex justify-center align-middle w-full mx-auto relative">
+				<h1 className="text-3xl text-center mt-14 w-full">{blog.title}</h1>
+				{auth && blog && blog.author && auth?.username === blog.author?.username && (
+					<div className="absolute right-0 flex flex-col h-full justify-between">
+						<FontAwesomeIcon
+							icon={faTrashCan}
+							className="cursor-pointer w-5 h-5 text-red-700 hover:text-red-600 hover:scale-105 transition-all duration-300"
+							onClick={handleDelete}
+						/>
+						<Link to={`/edit/${blog._id}`}>
 							<FontAwesomeIcon
-								icon={faTrashCan}
-								className="cursor-pointer ml-3"
-								onClick={handleDelete}
+								icon={faUserPen}
+								className="cursor-pointer w-6 h-6 hover:text-sky-600 transition-all duration-300 hover:scale-105"
 							/>
-						</div>
-					)}
-				</h1>
-				<div className="mt-5 mb-4 flex justify-between">
-					<span>Authored by:{capitalize(blog.author?.username)}</span>
-					<span>{moment(blog.createdAt).fromNow()}</span>
+						</Link>
+					</div>
+				)}
+			</div>
+			<div className="flex flex-col w-full my-5 mx-auto max-w-3xl">
+				<div className="flex justify-between">
+					<p className=" italic">Authored by: {capitalize(blog.author?.username)}</p>
+					<p>{moment(blog.createdAt).fromNow()}</p>
 				</div>
-
 				<div
-					className="first-letter:ml-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0"
-					dangerouslySetInnerHTML={{__html: blog.content}}
-				/>
+					className="mt-5 first-letter:text-3xl first-letter:text-blue-600 first-letter:pr-0"
+					dangerouslySetInnerHTML={{__html: blog.content}}></div>
+
 			</div>
 		</div>
 	);

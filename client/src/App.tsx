@@ -25,49 +25,52 @@ const App: FC = () => {
 	// The * will redirect the user to the login page
 
 	return (
-		<AuthContext.Provider value={{auth, setAuth, reload, setReload, searchTerm, setSearchTerm}}>
-			<BrowserRouter>
-				<Navbar />
-				<Routes>
-					<Route
-						path="/"
-						element={<Home />}></Route>
-					<Route
-						path="/register"
-						element={<Register />}></Route>
-					<Route
-						path="/login"
-						element={<Login />}></Route>
-					{auth && (
+		<div className="app">
+			<AuthContext.Provider value={{auth, setAuth, reload, setReload, searchTerm, setSearchTerm}}>
+				<BrowserRouter>
+					<Navbar />
+					<Routes>
 						<Route
-							path="/create"
-							element={<Create />}></Route>
-					)}
-					<Route
-						path="/blog/:id"
-						element={<SingleBlog />}></Route>
-					<Route
-						path="/edit/:id"
-						element={<Edit />}></Route>
-					{auth && (
+							path="/"
+							element={<Home />}></Route>
 						<Route
-							path="/profile"
-							element={<Profile />}></Route>
-					)}
-					{auth && (
+							path="/register"
+							element={<Register />}></Route>
 						<Route
-							path="/userpage"
-							element={<UserPage />}></Route>
-					)}
-					<Route
-						path="/server_down"
-						element={<ServerDown />}></Route>
-					<Route
-						path="*"
-						element={<Login />}></Route>
-				</Routes>
-			</BrowserRouter>
-		</AuthContext.Provider>
+							path="/login"
+							element={<Login />}></Route>
+						{auth && (
+							<Route
+								path="/create"
+								element={<Create />}></Route>
+						)}
+						<Route
+							path="/blog/:id"
+							element={<SingleBlog />}></Route>
+						<Route
+							path="/edit/:id"
+							element={<Edit />}></Route>
+						{auth && (
+							<Route
+								path="/profile"
+								element={<Profile />}></Route>
+						)}
+						{auth && (
+							<Route
+								path="/userpage"
+								element={<UserPage />}></Route>
+						)}
+						<Route
+							path="/server_down"
+							element={<ServerDown />}></Route>
+						<Route
+							path="*"
+							element={<Login />}></Route>
+					</Routes>
+				</BrowserRouter>
+			</AuthContext.Provider>
+		</div>
+
 	);
 };
 

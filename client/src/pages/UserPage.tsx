@@ -34,8 +34,8 @@ const UserPage: FC = () => {
 					</h2>
 				</div>
 			)}
-			<div className=" mt-10 p-10 ml-50 flex justify-center items-center">
-				<div className="flex">
+			<div className=" mt-10 px-5 flex justify-center items-center">
+				<div className="flex flex-wrap w-4/5 justify-center">
 					{blog &&
 						blog.map((blog) => (
 							<Usersolo

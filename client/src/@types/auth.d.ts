@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 export type AuthContextType = {
-	auth: null | AuthType;
+	auth: AuthType;
 	setAuth: React.Dispatch<React.SetStateAction<null>>;
 	reload: boolean;
 	setReload: React.Dispatch<React.SetStateAction<boolean>>;
