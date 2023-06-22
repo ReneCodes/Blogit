@@ -13,11 +13,11 @@ import {
 } from './controllers/userController.js';
 
 import {
-	blogGetRouter,
-	blogPostRouter,
+	getAllOrFilteredBlogs,
+	getSingleBlog,
+	createBlogPost,
 	blogDeleteRouter,
 	blogUpdateRouter,
-	blogGetByIdRouter,
 } from './controllers/blogController';
 
 import {getAuth} from './middleware/auth';
@@ -32,12 +32,13 @@ router.put('/profile/:id', getAuth, updateUserProfile as RequestHandler);
 router.get('/auth', getAuth, authenticateUser as RequestHandler);
 router.delete('/profile/:id', getAuth, deleteUser as RequestHandler);
 // BlogController
-router.get('/blog', blogGetRouter as RequestHandler);
-router.get('/blog/:id', blogGetByIdRouter as RequestHandler);
-router.post('/create', getAuth, blogPostRouter as RequestHandler);
+router.get('/blog', getAllOrFilteredBlogs as RequestHandler);
+router.get('/blog/:id', getSingleBlog as RequestHandler);
+router.post('/create', getAuth, createBlogPost as RequestHandler);
 router.delete('/blog/:id', getAuth, blogDeleteRouter as RequestHandler);
 router.put('/edit/:id', getAuth, blogUpdateRouter as RequestHandler);
 
+// FIXME: change storage positon for multer => can't create Blogposts
 const storage = multer.diskStorage({
 	destination: (req: Request, file: Express.Multer.File, cb: Function) => {
 		cb(null, 'Images');
