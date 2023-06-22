@@ -1,4 +1,3 @@
-
 import React, {useState, useContext, useEffect, ChangeEvent} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUserPen} from '@fortawesome/free-solid-svg-icons';
@@ -39,7 +38,7 @@ const Profile: React.FC = () => {
 	};
 
 	const handleDelete = () => {
-		deleteUser(auth, navigate);
+		deleteUser(auth, setAuth, setReload, navigate);
 	};
 
 	const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,17 +50,21 @@ const Profile: React.FC = () => {
 
 	return (
 		<div className="mt-16 relative flex justify-center align-middle">
-			<div className="relative w-6/12 p-5" data-testid="container">
+			<div
+				className="relative w-6/12 p-5"
+				data-testid="container">
 				<div className="flex justify-between ">
 					<span className=" text-3xl mb-5 text-sky-600 ">Update Your Account</span>
 					<button
 						className="w-30  self-center rounded-lg p-2.5 cursor-pointer border-2 border-red-500 bg-inherit hover:bg-red-500 hover:text-white transition-all duration-200"
-
 						onClick={handleDelete}>
 						Delete Account
 					</button>
 				</div>
-				<form className="flex flex-col"onSubmit={handleSubmit} data-testid="form">
+				<form
+					className="flex flex-col"
+					onSubmit={handleSubmit}
+					data-testid="form">
 					<label className="text-lg mt-5">Profile Picture</label>
 					<div className="flex items-center mt-2 mb-2">
 						<img

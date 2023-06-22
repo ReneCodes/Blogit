@@ -2,8 +2,14 @@ import axios from 'axios';
 import {NavigateFunction} from 'react-router-dom';
 import {AuthType} from '../@types/auth';
 import {User} from '../@types/model';
+import {logout} from './AuthUtils';
 
-export const deleteUser = async (auth: AuthType, navigate: NavigateFunction) => {
+export const deleteUser = async (
+	auth: AuthType,
+	setAuth: React.Dispatch<React.SetStateAction<null>>,
+	setReload: React.Dispatch<React.SetStateAction<boolean>>,
+	navigate: NavigateFunction
+) => {
 	try {
 		await axios
 			.delete(`${process.env.REACT_APP_SERVER}/profile/${auth._id}`, {
@@ -11,8 +17,7 @@ export const deleteUser = async (auth: AuthType, navigate: NavigateFunction) => 
 				data: {},
 			})
 			.then(() => {
-				navigate('/');
-				localStorage.removeItem('token');
+				logout(setAuth, setReload, navigate);
 			});
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
