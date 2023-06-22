@@ -28,7 +28,7 @@ node_modules
 # Custom
 .DS_Store
 private
-build
+# build
 dist
 .env
 .env.local
